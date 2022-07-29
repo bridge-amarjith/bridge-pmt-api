@@ -1,0 +1,3607 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Zee_admin {
+  id       Int     @id @default(autoincrement())
+  fullname String? @default("Administrator") @db.VarChar(100)
+  login    String? @db.VarChar(20)
+  password String? @db.VarChar(20)
+  status   Int?
+  email    String? @db.VarChar(255)
+}
+
+model Zee_logged {
+  id    Int     @id @default(autoincrement())
+  admin Int?
+  token String? @db.VarChar(32)
+}
+
+model Zee_pages {
+  id      Int     @id @default(autoincrement())
+  title   String? @db.VarChar(255)
+  parent  Int?
+  order   Int?
+  content String? @db.Text
+}
+
+model bnb_reservations {
+  id       Int                        @id @default(autoincrement())
+  date     DateTime?                  @db.Date
+  occupied bnb_reservations_occupied?
+  duration Int?
+  name     String?                    @db.VarChar(255)
+  credit   String?                    @db.VarChar(255)
+  type     String?                    @db.VarChar(100)
+  address  String?                    @db.VarChar(255)
+  city     String?                    @db.VarChar(50)
+  phone    String?                    @db.VarChar(30)
+  email    String?                    @db.VarChar(50)
+  request  String?                    @db.Text
+  closed   bnb_reservations_closed?
+}
+
+model bnb_schedule {
+  id        Int                @id @default(autoincrement())
+  date      DateTime?          @db.Date
+  reserv_id Int?
+  part      bnb_schedule_part?
+}
+
+model bnb_users {
+  id       Int               @id @default(autoincrement())
+  fullname String?           @default("User") @db.VarChar(100)
+  login    String?           @db.VarChar(20)
+  password String?           @db.VarChar(20)
+  status   bnb_users_status?
+  email    String?           @db.VarChar(255)
+  token    String?           @db.VarChar(32)
+}
+
+model bolwerk_docs {
+  id    Int     @id @default(autoincrement())
+  title String? @db.VarChar(255)
+  doc   String? @db.VarChar(255)
+}
+
+model bolwerk_meta {
+  id          Int     @id @default(autoincrement())
+  title       String? @db.VarChar(255)
+  description String? @db.Text
+  keywords    String? @db.Text
+}
+
+model bolwerk_pages {
+  id      Int     @id @default(autoincrement())
+  title   String? @db.VarChar(255)
+  content String? @db.Text
+  picture String? @db.VarChar(255)
+}
+
+model bolwerk_users {
+  id       Int                   @id @default(autoincrement())
+  fullname String?               @default("User") @db.VarChar(100)
+  login    String?               @db.VarChar(20)
+  email    String?               @db.VarChar(255)
+  password String?               @db.VarChar(20)
+  status   bolwerk_users_status?
+  token    String?               @db.VarChar(32)
+}
+
+model bp_admin {
+  id       Int     @id @default(autoincrement())
+  fullname String? @default("Administrator") @db.VarChar(100)
+  login    String? @db.VarChar(20)
+  password String? @db.VarChar(20)
+  status   Int?
+  email    String? @db.VarChar(255)
+}
+
+model bp_cats {
+  id      Int  @id @default(autoincrement())
+  site_id Int?
+}
+
+model bp_contactperson {
+  id          Int                      @id @default(autoincrement())
+  customer_id Int?
+  firstname   String?                  @db.VarChar(255)
+  lastname    String?                  @db.VarChar(255)
+  function    String?                  @db.VarChar(255)
+  gender      bp_contactperson_gender?
+  phone       String?                  @db.VarChar(255)
+  mobilephone String?                  @db.VarChar(255)
+  email       String?                  @db.VarChar(255)
+  login       String?                  @db.VarChar(255)
+  password    String?                  @db.VarChar(255)
+  block       bp_contactperson_block?  @default(N)
+}
+
+model bp_csrrecievers {
+  id          Int                      @id @default(autoincrement())
+  site_id     Int?
+  function    String?                  @db.VarChar(255)
+  name        String?                  @db.VarChar(255)
+  phone       String?                  @db.VarChar(255)
+  mobilephone String?                  @db.VarChar(255)
+  email       String?                  @db.VarChar(255)
+  receive     bp_csrrecievers_receive?
+}
+
+model bp_csrreports {
+  id          Int       @id @default(autoincrement())
+  site_id     Int?
+  customer_id Int?
+  contact_id  Int?
+  order_id    Int?
+  title       String?   @db.VarChar(255)
+  datereport  DateTime? @db.Date
+}
+
+model bp_customers {
+  id            Int     @id @default(autoincrement())
+  site_id       Int?
+  company       String? @db.VarChar(255)
+  adress1       String? @db.VarChar(255)
+  adress2       String? @db.VarChar(255)
+  zipcode       String? @db.VarChar(50)
+  city          String? @db.VarChar(255)
+  country       String? @db.VarChar(255)
+  languagepreff Int?
+  phone         String? @db.VarChar(255)
+  fax           String? @db.VarChar(255)
+  web           String? @db.VarChar(255)
+  email         String? @db.VarChar(255)
+}
+
+model bp_customersorders {
+  id             Int                             @id @default(autoincrement())
+  site_id        Int?
+  customer_id    Int?
+  location       String?                         @db.VarChar(255)
+  sysname        String?                         @db.VarChar(255)
+  sysdescription String?                         @db.Text
+  ordernum       String?                         @db.VarChar(50)
+  dateship       DateTime?                       @db.Date
+  dateinstall    DateTime?                       @db.Date
+  orderstatus    bp_customersorders_orderstatus?
+}
+
+model bp_customervideo {
+  id             Int                              @id @default(autoincrement())
+  customerid     Int?
+  videoid        Int?
+  videotitle     String?                          @db.VarChar(255)
+  dateexpiring   DateTime?                        @db.Date
+  nodateexpiring bp_customervideo_nodateexpiring? @default(N)
+}
+
+model bp_dictionary {
+  id      Int     @id @default(autoincrement())
+  lang_id Int?
+  word_id Int?
+  value   String? @db.VarChar(250)
+}
+
+model bp_employments {
+  id    Int                   @id @default(autoincrement())
+  site1 bp_employments_site1?
+  site2 bp_employments_site2?
+  site3 bp_employments_site3?
+  type  bp_employments_type?
+}
+
+model bp_home_videos {
+  id       Int                   @id @default(autoincrement())
+  site_id  Int?
+  video1_1 String?               @db.VarChar(255)
+  video1_2 String?               @db.VarChar(255)
+  show1    bp_home_videos_show1?
+  show2    bp_home_videos_show2?
+  video2_1 String?               @db.VarChar(255)
+  video2_2 String?               @db.VarChar(255)
+}
+
+model bp_inter {
+  id      Int     @id @default(autoincrement())
+  code    Int?
+  item_id Int?
+  value   String? @db.Text
+  lang_id Int?
+}
+
+model bp_langs {
+  id    Int             @id @default(autoincrement())
+  title String?         @db.VarChar(100)
+  site1 bp_langs_site1?
+  site2 bp_langs_site2?
+  site3 bp_langs_site3?
+}
+
+model bp_links {
+  id       Int     @id @default(autoincrement())
+  site_id  Int?
+  link1    String? @db.VarChar(255)
+  picture1 String? @db.VarChar(255)
+  link2    String? @db.VarChar(255)
+  picture2 String? @db.VarChar(255)
+}
+
+model bp_locations {
+  id      Int                 @id @default(autoincrement())
+  email1  String?             @db.VarChar(255)
+  email2  String?             @db.VarChar(255)
+  email3  String?             @db.VarChar(255)
+  site_id Int?
+  show1   bp_locations_show1?
+  show2   bp_locations_show2?
+  show3   bp_locations_show3?
+}
+
+model bp_logged {
+  id    Int     @id @default(autoincrement())
+  admin Int?
+  token String? @db.VarChar(32)
+}
+
+model bp_maillangs {
+  id    Int                 @id @default(autoincrement())
+  title String?             @db.VarChar(100)
+  site1 bp_maillangs_site1?
+  site2 bp_maillangs_site2?
+  site3 bp_maillangs_site3?
+}
+
+model bp_mails {
+  id             Int     @id @default(autoincrement())
+  site_id        Int?
+  mail_1_content String? @db.Text
+  mail_1_subject String? @db.VarChar(255)
+  mail_2_content String? @db.Text
+  mail_2_subject String? @db.VarChar(255)
+  mail_3_content String? @db.Text
+  mail_4_content String? @db.Text
+  mail_5_content String? @db.Text
+  mail_6_content String? @db.Text
+  mail_6_subject String? @db.VarChar(255)
+  csr_content    String? @db.Text
+  csr_title      String? @db.VarChar(355)
+  csr_q1         String? @db.VarChar(255)
+  csr_q2         String? @db.VarChar(255)
+  csr_q3         String? @db.VarChar(255)
+  csr_q4         String? @db.VarChar(255)
+  csr_q5         String? @db.VarChar(255)
+  csr_q6         String? @db.VarChar(255)
+  csr_q7         String? @db.VarChar(255)
+  csr_q8         String? @db.VarChar(255)
+  csr_q9         String? @db.VarChar(255)
+  csr_q10        String? @db.VarChar(255)
+  lang_id        Int?
+}
+
+model bp_news {
+  id               Int              @id @default(autoincrement())
+  picture          String?          @db.VarChar(255)
+  date             DateTime?        @db.Date
+  archivation_date DateTime?        @db.Date
+  site_id          Int?
+  archive          bp_news_archive?
+  show             bp_news_show?
+}
+
+model bp_page_codes {
+  id    Int     @id @default(autoincrement())
+  title String? @db.VarChar(255)
+}
+
+model bp_pages {
+  id        Int  @id @default(autoincrement())
+  site_id   Int?
+  page_code Int?
+}
+
+model bp_press {
+  id               Int               @id @default(autoincrement())
+  picture          String?           @db.VarChar(255)
+  date             DateTime?         @db.Date
+  archivation_date DateTime?         @db.Date
+  site_id          Int?
+  archive          bp_press_archive?
+  show             bp_press_show?
+}
+
+model bp_products {
+  id      Int     @id @default(autoincrement())
+  picture String? @db.VarChar(255)
+  site_id Int?
+  cat_id  Int?
+}
+
+model bp_remindercsr {
+  id          Int       @id @default(autoincrement())
+  site_id     Int?
+  orderid     Int?
+  cpersonid   Int?
+  reminderday DateTime? @db.Date
+}
+
+model bp_trade_shows {
+  id         Int       @id @default(autoincrement())
+  picture    String?   @db.VarChar(255)
+  start_date DateTime? @db.Date
+  end_date   DateTime? @db.Date
+  erase_date DateTime? @db.Date
+  site_id    Int?
+}
+
+model bp_uploadvideo {
+  id          Int       @id @default(autoincrement())
+  videotitle  String?   @db.VarChar(255)
+  videosource Int?
+  video       String?   @db.VarChar(255)
+  videonumber Int?
+  dateupload  DateTime? @db.Date
+  typemachin  String?   @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  aplication  String?   @db.VarChar(255)
+  primarypack String?   @db.VarChar(255)
+  secondpack  String?   @db.VarChar(255)
+  videolenth  String?   @db.VarChar(255)
+  ordernumber String?   @db.VarChar(255)
+  nameclient  String?   @db.VarChar(255)
+}
+
+model bp_users_pages {
+  id        Int  @id @default(autoincrement())
+  user_id   Int?
+  page_code Int?
+  site_id   Int?
+}
+
+model bp_videos {
+  id      Int     @id @default(autoincrement())
+  video   String? @db.VarChar(255)
+  prod_id Int?
+  preview String? @db.VarChar(255)
+}
+
+model bp_words {
+  id      Int     @id @default(autoincrement())
+  name    String? @db.VarChar(255)
+  site_id Int?
+}
+
+model bridge_blog {
+  id           Int                       @id @default(autoincrement())
+  title        String?                   @db.VarChar(255)
+  posted       DateTime?                 @db.DateTime(0)
+  message      String?                   @db.Text
+  author       String?                   @db.VarChar(255)
+  comment      Int?                      @default(0)
+  shown        bridge_blog_shown?        @default(Y)
+  cat_id       Int?
+  picture      String?                   @db.VarChar(255)
+  blogger_id   Int?
+  message_en   String?                   @db.Text
+  show_english bridge_blog_show_english?
+  keywords     String?                   @db.Text
+  description  String?                   @db.Text
+}
+
+model bridge_bloggers {
+  id          Int     @id @default(autoincrement())
+  name        String? @db.VarChar(255)
+  description String? @db.Text
+}
+
+model bridge_card2009 {
+  id      Int     @id @default(autoincrement())
+  name    String? @db.VarChar(100)
+  company String? @db.VarChar(100)
+  email   String? @db.VarChar(100)
+  sent    Int?    @default(0)
+  voted   Int?    @default(0)
+}
+
+model bridge_cats {
+  id    Int     @id @default(autoincrement())
+  title String? @db.VarChar(255)
+}
+
+model bridge_cv_education {
+  ed_id     Int                            @id @default(autoincrement()) @db.UnsignedInt
+  cv_id     Int                            @db.UnsignedInt
+  education String                         @db.VarChar(250)
+  start     String                         @db.VarChar(5)
+  end       String                         @db.VarChar(5)
+  graduated bridge_cv_education_graduated? @default(no)
+
+  @@index([cv_id], map: "cv_id")
+}
+
+model bridge_cv_experience {
+  ex_id   Int    @id @default(autoincrement()) @db.UnsignedInt
+  cv_id   Int    @db.UnsignedInt
+  project String @db.VarChar(250)
+  start   Int    @db.UnsignedInt
+  end     Int    @db.UnsignedInt
+
+  @@index([cv_id], map: "cv_id")
+}
+
+model bridge_cv_languages {
+  ln_id    Int                        @id @default(autoincrement()) @db.UnsignedInt
+  cv_id    Int                        @db.UnsignedInt
+  language String                     @db.VarChar(250)
+  read     bridge_cv_languages_read?  @default(dbgenerated("1"))
+  write    bridge_cv_languages_write? @default(dbgenerated("1"))
+  speak    bridge_cv_languages_speak? @default(dbgenerated("1"))
+
+  @@index([cv_id], map: "cv_id")
+}
+
+model bridge_cv_profile {
+  cv_id    Int                       @id @default(autoincrement()) @db.UnsignedInt
+  name     String                    @db.VarChar(250)
+  birthday DateTime                  @db.Date
+  country  String                    @db.VarChar(50)
+  photo    String?                   @default("no_photo.jpg") @db.VarChar(25)
+  visible  bridge_cv_profile_visible @default(dbgenerated("0"))
+}
+
+model bridge_cv_skills {
+  sk_id Int    @id @default(autoincrement()) @db.UnsignedInt
+  cv_id Int    @db.UnsignedInt
+  skill String @db.VarChar(250)
+  years Int    @db.UnsignedInt
+  level Int    @db.UnsignedInt
+
+  @@index([cv_id], map: "cv_id")
+}
+
+model bridge_cv_user {
+  user_id  Int      @id @default(autoincrement()) @db.UnsignedInt
+  username String   @unique(map: "username") @db.VarChar(20)
+  password String   @db.VarChar(32)
+  r_pass   String   @db.VarChar(20)
+  email    String   @db.VarChar(100)
+  compname String   @db.VarChar(100)
+  phone    String   @db.VarChar(20)
+  website  String   @db.VarChar(100)
+  regtime  DateTime @db.Date
+}
+
+model bridge_dictionary {
+  id   Int     @id @default(autoincrement())
+  code String? @db.VarChar(30)
+  lang Int?
+  word String? @db.VarChar(255)
+}
+
+model bridge_languages {
+  id      Int                      @id @default(autoincrement())
+  code    String?                  @db.Char(2)
+  name    String?                  @db.VarChar(30)
+  flag    String?                  @db.VarChar(30)
+  charset String?                  @db.VarChar(30)
+  active  bridge_languages_active? @default(N)
+}
+
+model bridge_meta_blog {
+  id               Int     @id @default(autoincrement())
+  meta_title       String? @db.VarChar(255)
+  meta_keywords    String? @db.Text
+  meta_description String? @db.Text
+}
+
+model bridge_pages {
+  id          Int                      @id @default(autoincrement())
+  page        Int?
+  lang        Int?
+  parent      Int?                     @default(0)
+  filename    String?                  @db.VarChar(200)
+  name        String?                  @db.VarChar(100)
+  pagetitle   String?                  @db.VarChar(255)
+  content     String?                  @db.Text
+  title       String?                  @db.VarChar(255)
+  description String?                  @db.VarChar(255)
+  keywords    String?                  @db.VarChar(255)
+  mainmenu    bridge_pages_mainmenu?   @default(N)
+  leftmenu    bridge_pages_leftmenu?   @default(N)
+  bottommenu  bridge_pages_bottommenu? @default(N)
+  show        bridge_pages_show?       @default(Y)
+}
+
+model bridge_settings {
+  id           Int     @id @default(autoincrement())
+  copyright    String? @db.VarChar(100)
+  emailto      String? @db.VarChar(100)
+  emailfrom    String? @db.VarChar(100)
+  emailsubject String? @db.VarChar(100)
+  contactinfo  String? @db.Text
+  deflang      String? @default("en") @db.Char(2)
+}
+
+model bridge_users {
+  id       Int                  @id @default(autoincrement())
+  fullname String?              @default("User") @db.VarChar(100)
+  login    String?              @db.VarChar(20)
+  password String?              @db.VarChar(20)
+  status   bridge_users_status?
+  email    String?              @db.VarChar(255)
+  token    String?              @db.VarChar(32)
+}
+
+model dj_admin {
+  id       Int     @id @default(autoincrement())
+  fullname String? @default("Administrator") @db.VarChar(100)
+  login    String? @db.VarChar(20)
+  password String? @db.VarChar(20)
+  email    String? @db.VarChar(255)
+}
+
+model dj_logged {
+  id    Int     @id @default(autoincrement())
+  admin Int?
+  token String? @db.VarChar(32)
+}
+
+model dj_pages {
+  id      Int     @id @default(autoincrement())
+  title   String? @db.VarChar(255)
+  content String? @db.Text
+}
+
+model dj_portfolio {
+  id      Int     @id @default(autoincrement())
+  title   String? @db.VarChar(255)
+  content String? @db.Text
+  picture String? @db.VarChar(255)
+}
+
+model eenprog_login {
+  token     String    @id @default("") @db.VarChar(50)
+  user      Int?
+  logintime DateTime? @db.DateTime(0)
+}
+
+model eenprog_users {
+  id        Int                      @id @default(autoincrement()) @db.UnsignedInt
+  company   String?                  @db.VarChar(255)
+  person    String?                  @db.VarChar(255)
+  phone     String?                  @db.VarChar(50)
+  address   String?                  @db.VarChar(255)
+  login     String?                  @db.VarChar(50)
+  visit     eenprog_users_visit?     @default(no)
+  page2     eenprog_users_page2?
+  page3     eenprog_users_page3?
+  email     String?                  @db.VarChar(100)
+  iscalling eenprog_users_iscalling?
+  isvisit   eenprog_users_isvisit?
+  preftime  Int?
+  prefday   Int?
+}
+
+model hamelink_brief {
+  id            Int      @id @default(autoincrement())
+  create_day    DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  aanhef        Int      @default(0)
+  voorletters   String   @default("") @db.VarChar(200)
+  tussenvoegsel String   @default("") @db.VarChar(200)
+  achternaam    String   @default("") @db.VarChar(200)
+  straat        String   @default("") @db.VarChar(200)
+  postcode      String   @default("") @db.VarChar(200)
+  woonplaats    String   @default("") @db.VarChar(200)
+  telefoon      String   @default("") @db.VarChar(200)
+  email         String   @default("") @db.VarChar(200)
+  status        String   @default("ACTIVE") @db.VarChar(20)
+}
+
+model hamelink_categories {
+  id          Int    @id @default(autoincrement())
+  id_parent   Int    @default(0)
+  level       Int    @default(0)
+  name        String @default("") @db.VarChar(200)
+  description String @db.Text
+  title       String @default("") @db.VarChar(200)
+  meta_descr  String @db.Text
+  meta_key    String @db.Text
+  prio        Int    @default(1)
+  status      String @default("ACTIVE") @db.VarChar(20)
+  links_count Int    @default(0)
+}
+
+model hamelink_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_ho String @default("") @db.VarChar(200)
+}
+
+model hamelink_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_ho String @db.Text
+}
+
+model hamelink_links {
+  id   Int    @id @default(autoincrement())
+  name String @default("") @db.VarChar(200)
+  url  String @default("") @db.VarChar(200)
+}
+
+model hamelink_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model hamelink_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model hamelink_menus {
+  id   Int    @id @default(autoincrement())
+  name String @default("") @db.VarChar(200)
+}
+
+model hamelink_news {
+  id         Int      @id @default(autoincrement())
+  create_day DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day        DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  title      String   @default("") @db.VarChar(200)
+  text       String   @db.Text
+  picture    Int      @default(0)
+  showday    Int      @default(1)
+  division   Int      @default(1)
+  status     String   @default("ACTIVE") @db.VarChar(20)
+  id_product Int      @default(0)
+}
+
+model hamelink_pages {
+  id             Int    @id @default(autoincrement())
+  id_menu        Int    @default(0)
+  prio           Int    @default(0)
+  name           String @default("") @db.VarChar(100)
+  title_IDS      Int    @default(0)
+  meta_key_IDS   Int    @default(0)
+  meta_descr_IDS Int    @default(0)
+  body_IDT       Int    @default(0)
+  rule           Int    @default(0)
+}
+
+model hamelink_pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @default("") @db.VarChar(100)
+  filename    String @default("") @db.VarChar(200)
+  resize_type Int    @default(1)
+}
+
+model hamelink_products {
+  id          Int      @id @default(autoincrement())
+  create_day  DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  name        String   @default("") @db.VarChar(200)
+  name_lit    String   @default("") @db.VarChar(200)
+  description String   @db.Text
+  id_category Int      @default(0)
+  pictures    Int      @default(0)
+  is_favorite Int      @default(0)
+  is_home     Int      @default(0)
+  id_user     Int      @default(0)
+  prio        Int      @default(1)
+}
+
+model hamelink_routes {
+  id    Int    @id @default(autoincrement())
+  title String @default("") @db.VarChar(200)
+  text  String @db.Text
+}
+
+model hamelink_users {
+  id          Int       @id @default(autoincrement())
+  create_day  DateTime? @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  fullname    String    @default("") @db.VarChar(200)
+  login       String    @default("") @db.VarChar(100)
+  password    String    @default("") @db.VarChar(100)
+  email       String    @default("") @db.VarChar(200)
+  status      String    @default("USER") @db.VarChar(20)
+  code        String    @default("12345678901234") @db.VarChar(14)
+  description String    @db.Text
+}
+
+model hamelink_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(50)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+model hyline_admin {
+  id       Int     @id @default(autoincrement())
+  fullname String? @default("Administrator") @db.VarChar(100)
+  login    String? @db.VarChar(20)
+  password String? @db.VarChar(20)
+  status   Int?
+  email    String? @db.VarChar(255)
+}
+
+model hyline_contacts {
+  id            Int     @id @default(autoincrement())
+  title         String? @db.VarChar(255)
+  site          Int?
+  content0      String? @db.Text
+  content1      String? @db.Text
+  email_title   String? @db.VarChar(255)
+  email_contact String? @db.VarChar(255)
+}
+
+model hyline_logged {
+  id    Int     @id @default(autoincrement())
+  admin Int?
+  token String? @db.VarChar(32)
+}
+
+model hyline_news {
+  id          Int       @id @default(autoincrement())
+  date        DateTime? @db.Date
+  title0      String?   @db.VarChar(255)
+  title1      String?   @db.VarChar(255)
+  content0    String?   @db.Text
+  content1    String?   @db.Text
+  subcontent0 String?   @db.VarChar(255)
+  subcontent1 String?   @db.VarChar(255)
+  site        Int?
+}
+
+model hyline_pages {
+  id       Int     @id @default(autoincrement())
+  title    String? @db.VarChar(255)
+  titlepic String? @db.VarChar(50)
+  parent   Int?
+  order    Int?
+  site     Int?
+  picture1 String? @db.VarChar(50)
+  picture2 String? @db.VarChar(50)
+  content0 String? @db.Text
+  content1 String? @db.Text
+}
+
+model hyline_users {
+  id         Int                 @id @default(autoincrement())
+  name       String?             @db.VarChar(255)
+  login      String?             @db.VarChar(255)
+  email      String?             @db.VarChar(50)
+  phone      String?             @db.VarChar(50)
+  department String?             @db.VarChar(255)
+  password   String?             @db.VarChar(50)
+  block      hyline_users_block? @default(N)
+}
+
+model hyline_vacs {
+  id          Int     @id @default(autoincrement())
+  title       String? @db.VarChar(255)
+  subtitle    String? @db.VarChar(255)
+  lookfor     String? @db.Text
+  offering    String? @db.Text
+  contactinfo String? @db.Text
+  site        Int?
+}
+
+model inpaqt_langs {
+  id      Int                   @id @default(autoincrement())
+  title   String?               @db.VarChar(100)
+  enabled inpaqt_langs_enabled? @default(N)
+}
+
+model inpaqt_pages {
+  id         Int                 @id @default(autoincrement())
+  content_nl String?             @db.Text
+  title_nl   String?             @db.VarChar(255)
+  content_en String?             @db.Text
+  title_en   String?             @db.VarChar(255)
+  content_de String?             @db.Text
+  title_de   String?             @db.VarChar(255)
+  content_fr String?             @db.Text
+  title_fr   String?             @db.VarChar(255)
+  header     String?             @db.VarChar(255)
+  picture    String?             @db.VarChar(255)
+  parent     Int?
+  ordernum   Int?
+  start      inpaqt_pages_start? @default(N)
+}
+
+model inpaqt_users {
+  id       Int                  @id @default(autoincrement())
+  fullname String?              @default("User") @db.VarChar(100)
+  login    String?              @db.VarChar(20)
+  email    String?              @db.VarChar(255)
+  password String?              @db.VarChar(20)
+  status   inpaqt_users_status?
+  token    String?              @db.VarChar(32)
+}
+
+model itsnoize2_admin {
+  id       Int     @id @default(autoincrement())
+  fullname String? @default("Administrator") @db.VarChar(100)
+  login    String? @db.VarChar(20)
+  password String? @db.VarChar(20)
+  status   Int?
+  email    String? @db.VarChar(255)
+}
+
+model itsnoize2_backgrounds {
+  id      Int                        @id @default(autoincrement())
+  picture String?                    @db.VarChar(255)
+  title   String?                    @db.VarChar(255)
+  show    itsnoize2_backgrounds_show @default(N)
+}
+
+model itsnoize2_categories {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(255)
+}
+
+model itsnoize2_collections {
+  id              Int    @id @default(autoincrement())
+  picture_1       Int    @default(0)
+  picture_2       Int    @default(0)
+  picture_3       Int    @default(0)
+  picture_4       Int    @default(0)
+  preview_num     Int    @default(1)
+  prio            Int    @default(0)
+  secret          Int    @default(0)
+  name            String @db.VarChar(200)
+  title_IDS       Int
+  preview_width   Int
+  picture_1_width Int
+  picture_2_width Int
+  picture_3_width Int
+  picture_4_width Int
+  description_IDT Int?
+}
+
+model itsnoize2_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_nl String @default("") @db.VarChar(200)
+  data_ru String @default("") @db.VarChar(200)
+}
+
+model itsnoize2_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_nl String @db.Text
+  data_ru String @db.Text
+}
+
+model itsnoize2_languages {
+  id          Int    @id @default(autoincrement())
+  lang        String @default("") @db.VarChar(10)
+  name        String @default("") @db.VarChar(200)
+  title       String @default("") @db.VarChar(200)
+  description String @db.Text
+  prio        Int    @default(1)
+  status      String @default("ACTIVE") @db.VarChar(20)
+}
+
+model itsnoize2_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(now()) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model itsnoize2_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model itsnoize2_logged {
+  id    Int     @id @default(autoincrement())
+  admin Int?
+  token String? @db.VarChar(32)
+}
+
+model itsnoize2_pages {
+  id      Int     @id @default(autoincrement())
+  title   String? @db.VarChar(255)
+  content String? @db.Text
+}
+
+model itsnoize2_pics {
+  id          Int     @id @default(autoincrement())
+  description String? @db.Text
+}
+
+model itsnoize2_pics_categories {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(255)
+}
+
+model itsnoize2_pics_filedatas {
+  id       Int                              @id @default(autoincrement())
+  name     String?                          @db.VarChar(255)
+  category Int?
+  file     String?                          @db.VarChar(50)
+  file_t   itsnoize2_pics_filedatas_file_t?
+}
+
+model itsnoize2_pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @default("") @db.VarChar(100)
+  filename    String @default("") @db.VarChar(200)
+  resize_type Int    @default(1)
+  type        Int    @default(0)
+  width       Int    @default(0)
+  height      Int    @default(0)
+}
+
+model itsnoize2_press {
+  id          Int     @id @default(autoincrement())
+  description String? @db.Text
+}
+
+model itsnoize2_press_filedata {
+  id           Int                                    @id @default(autoincrement())
+  title        String?                                @db.VarChar(255)
+  filename     String?                                @db.VarChar(255)
+  file_type    itsnoize2_press_filedata_file_type?
+  dlfilename   String?                                @db.VarChar(255)
+  dl_file_type itsnoize2_press_filedata_dl_file_type?
+  description  String?                                @db.VarChar(255)
+}
+
+model itsnoize2_products {
+  id          Int                           @id @default(autoincrement())
+  name        String?                       @db.VarChar(255)
+  description String?                       @db.Text
+  protected   itsnoize2_products_protected? @default(N)
+  public      itsnoize2_products_public?    @default(N)
+  category    Int?
+  photo1      String?                       @db.VarChar(50)
+  photo2      String?                       @db.VarChar(50)
+  photo3      String?                       @db.VarChar(50)
+}
+
+model itsnoize2_promos {
+  id              Int      @id @default(autoincrement())
+  create_day      DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day             DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  day_end         DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  name            String   @default("") @db.VarChar(200)
+  title_IDS       Int      @default(0)
+  description_IDT Int      @default(0)
+  picture         Int      @default(0)
+  showday         Int      @default(1)
+  division        Int      @default(1)
+  status          String   @default("ACTIVE") @db.VarChar(20)
+  id_product      Int      @default(0)
+  prio            Int      @default(0)
+}
+
+model itsnoize2_users {
+  id    Int                 @id @default(autoincrement())
+  login String?             @db.VarChar(50)
+  pass  String?             @db.VarChar(50)
+  r1    itsnoize2_users_r1? @default(N)
+  r2    itsnoize2_users_r2? @default(N)
+}
+
+model itsnoize2_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(200)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+model itsnoize2_words {
+  id       Int    @id @default(autoincrement())
+  module   String @default("") @db.VarChar(200)
+  variable String @default("") @db.VarChar(200)
+  data_en  String @db.Text
+  data_nl  String @db.Text
+  data_de  String @db.Text
+  data_ru  String @db.Text
+}
+
+model itsnoize_collections {
+  id              Int  @id @default(autoincrement())
+  picture_1       Int  @default(0)
+  picture_2       Int  @default(0)
+  picture_3       Int  @default(0)
+  picture_4       Int  @default(0)
+  preview_num     Int  @default(1)
+  prio            Int  @default(0)
+  secret          Int  @default(0)
+  description_IDT Int?
+}
+
+model itsnoize_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_nl String @default("") @db.VarChar(200)
+  data_ru String @default("") @db.VarChar(200)
+}
+
+model itsnoize_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_nl String @db.Text
+  data_ru String @db.Text
+}
+
+model itsnoize_languages {
+  id          Int    @id @default(autoincrement())
+  lang        String @default("") @db.VarChar(10)
+  name        String @default("") @db.VarChar(200)
+  title       String @default("") @db.VarChar(200)
+  description String @db.Text
+  prio        Int    @default(1)
+  status      String @default("ACTIVE") @db.VarChar(20)
+}
+
+model itsnoize_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(now()) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model itsnoize_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model itsnoize_pages {
+  id             Int    @id @default(autoincrement())
+  id_menu        Int    @default(0)
+  prio           Int    @default(0)
+  name           String @default("") @db.VarChar(100)
+  title_IDS      Int    @default(0)
+  meta_key_IDS   Int    @default(0)
+  meta_descr_IDS Int    @default(0)
+  body_IDT       Int    @default(0)
+  rule           Int    @default(0)
+}
+
+model itsnoize_pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @default("") @db.VarChar(100)
+  filename    String @default("") @db.VarChar(200)
+  resize_type Int    @default(1)
+  type        Int    @default(0)
+  width       Int    @default(0)
+  height      Int    @default(0)
+}
+
+model itsnoize_promos {
+  id              Int      @id @default(autoincrement())
+  create_day      DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day             DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  day_end         DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  name            String   @default("") @db.VarChar(200)
+  title_IDS       Int      @default(0)
+  description_IDT Int      @default(0)
+  picture         Int      @default(0)
+  showday         Int      @default(1)
+  division        Int      @default(1)
+  status          String   @default("ACTIVE") @db.VarChar(20)
+  id_product      Int      @default(0)
+  prio            Int      @default(0)
+}
+
+model itsnoize_users {
+  id          Int       @id @default(autoincrement())
+  create_day  DateTime? @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  fullname    String    @default("") @db.VarChar(200)
+  login       String    @default("") @db.VarChar(100)
+  password    String    @default("") @db.VarChar(100)
+  email       String    @default("") @db.VarChar(200)
+  status      String    @default("USER") @db.VarChar(20)
+  code        String    @default("12345678901234") @db.VarChar(14)
+  description String    @db.Text
+  postal_code String    @default("") @db.VarChar(200)
+  gender      Int       @default(1)
+  birth       DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  phone       String    @default("") @db.VarChar(200)
+  company     String    @default("") @db.VarChar(200)
+  address     String    @default("") @db.VarChar(200)
+  web         String    @default("") @db.VarChar(200)
+  sid         String    @default("") @db.VarChar(50)
+}
+
+model itsnoize_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(200)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+model itsnoize_words {
+  id       Int    @id @default(autoincrement())
+  module   String @default("") @db.VarChar(200)
+  variable String @default("") @db.VarChar(200)
+  data_en  String @db.Text
+  data_nl  String @db.Text
+  data_de  String @db.Text
+  data_ru  String @db.Text
+}
+
+model jbf1_admin {
+  id       Int     @id @default(autoincrement())
+  fullname String? @default("Administrator") @db.VarChar(100)
+  login    String? @db.VarChar(20)
+  password String? @db.VarChar(20)
+  email    String? @db.VarChar(255)
+}
+
+model jbf1_categories {
+  id       Int       @id @default(autoincrement())
+  title    String?   @db.VarChar(100)
+  created  DateTime? @db.Date
+  parent   Int?      @default(0)
+  ordernum Int?      @default(0)
+}
+
+model jbf1_classes {
+  id              Int                           @id @default(autoincrement())
+  classname       String?                       @db.VarChar(100)
+  schoolid        Int?
+  classphoto      String?                       @db.VarChar(255)
+  showonorderform jbf1_classes_showonorderform? @default(Y)
+  photoformat     jbf1_classes_photoformat?     @default(N)
+}
+
+model jbf1_logged {
+  id    Int     @id @default(autoincrement())
+  admin Int?
+  token String? @db.VarChar(32)
+}
+
+model jbf1_menu {
+  id       Int                 @id @default(autoincrement())
+  title    String?             @default("") @db.VarChar(100)
+  position jbf1_menu_position?
+  number   Int?
+  linkto   jbf1_menu_linkto?   @default(NONE)
+  linkid   Int?                @default(0)
+  linkstr  String?             @default("") @db.VarChar(255)
+  openin   jbf1_menu_openin?   @default(CA)
+  nwwidth  Int?                @default(0)
+  nwheight Int?                @default(0)
+}
+
+model jbf1_news {
+  id        Int                @id @default(autoincrement())
+  title     String?            @db.VarChar(100)
+  startdate DateTime?          @db.Date
+  enddate   DateTime?          @db.Date
+  added     DateTime?          @db.Date
+  archive   jbf1_news_archive? @default(N)
+  picture1  String?            @db.VarChar(100)
+  picture2  String?            @db.VarChar(100)
+  picture3  String?            @db.VarChar(100)
+  picture4  String?            @db.VarChar(100)
+}
+
+model jbf1_pages {
+  id       Int                @id @default(autoincrement())
+  name     String?            @db.VarChar(100)
+  layout   jbf1_pages_layout? @default(dbgenerated("1"))
+  color1   String?            @default("#FFFFFF") @db.VarChar(10)
+  color2   String?            @default("#FFFFFF") @db.VarChar(10)
+  content1 String?            @db.Text
+  content2 String?            @db.Text
+}
+
+model jbf1_photos {
+  id          Int       @id @default(autoincrement())
+  title       String?   @db.VarChar(100)
+  filename    String?   @db.VarChar(100)
+  description String?   @db.Text
+  tags        String?   @db.VarChar(255)
+  created     DateTime? @db.Date
+  category    Int?
+  price       Float?    @db.Float
+}
+
+model jbf1_schools {
+  id              Int                    @id @default(autoincrement())
+  schoolnr        String?                @db.VarChar(30)
+  schoolname      String?                @db.VarChar(100)
+  street          String?                @db.VarChar(100)
+  streetnumber    String?                @db.VarChar(20)
+  postalcode      String?                @db.VarChar(20)
+  city            String?                @db.VarChar(100)
+  contactperson   String?                @db.VarChar(100)
+  email           String?                @db.VarChar(100)
+  internetaadress String?                @db.VarChar(100)
+  created         DateTime?              @db.Date
+  startorder      DateTime?              @db.Date
+  endorder        DateTime?              @db.Date
+  autosend        jbf1_schools_autosend? @default(N)
+}
+
+model jbf_admin {
+  id       Int     @id @default(autoincrement())
+  fullname String? @default("Administrator") @db.VarChar(100)
+  login    String? @db.VarChar(20)
+  password String? @db.VarChar(20)
+  email    String? @db.VarChar(255)
+}
+
+model jbf_logged {
+  id    Int     @id @default(autoincrement())
+  admin Int?
+  token String? @db.VarChar(32)
+}
+
+model jbf_pages {
+  id       Int     @id @default(autoincrement())
+  name     String? @db.VarChar(100)
+  content  String? @db.Text
+  bgpic    String? @db.VarChar(100)
+  titlepic String? @db.VarChar(100)
+}
+
+model jbf_settings {
+  id        Int     @id @default(autoincrement())
+  emailto   String? @db.VarChar(50)
+  emailfrom String? @db.VarChar(50)
+  subject   String? @db.VarChar(100)
+  message   String? @db.VarChar(255)
+  phone     String? @db.VarChar(50)
+  fax       String? @db.VarChar(50)
+  mobile    String? @db.VarChar(32)
+}
+
+model kb_admin {
+  admin_id   Int    @id @default(autoincrement())
+  admin_name String @db.VarChar(255)
+  admin_pass String @db.VarChar(255)
+}
+
+model kb_company {
+  company_id      Int                        @id @default(autoincrement())
+  pmt_id          Int?
+  company_name    String                     @db.VarChar(255)
+  suppliercompany kb_company_suppliercompany @default(dbgenerated("0"))
+  comp_del        Int?                       @default(0)
+}
+
+model kb_designimgs {
+  imgid      Int    @id @default(autoincrement())
+  project_id Int
+  imgtitle   String @db.VarChar(255)
+  imgname    String @db.VarChar(255)
+}
+
+model kb_frametoproj {
+  fpid         Int @id @default(autoincrement())
+  framework_id Int
+  project_id   Int
+}
+
+model kb_framework {
+  framework_id   Int    @id @default(autoincrement())
+  framework_name String @db.VarChar(255)
+  fw_del         Int    @default(0)
+}
+
+model kb_frameworkother {
+  frameworkother_id   Int    @id @default(autoincrement())
+  frameworkother_name String @db.VarChar(255)
+  project_id          Int
+}
+
+model kb_func {
+  func_id      Int     @id @default(autoincrement())
+  project_id   Int?
+  func_title   String? @db.VarChar(255)
+  func_tech    String? @db.VarChar(255)
+  func_src     String? @db.VarChar(255)
+  func_LinkSrc String? @db.VarChar(255)
+  func_LinkDoc String? @db.VarChar(255)
+}
+
+model kb_project {
+  project_id        Int     @id @default(autoincrement())
+  pmt_id            Int
+  proj_key          Int
+  project_name      String? @db.VarChar(255)
+  project_client    String? @db.VarChar(255)
+  company_id        Int?
+  users_id          Int?
+  project_summary   String? @db.Text
+  project_hours     String? @db.VarChar(20)
+  project_bdgeFurl  String? @db.VarChar(255)
+  project_bdgeFuser String? @db.VarChar(255)
+  project_bdgeFpass String? @db.VarChar(255)
+  project_bdgeBurl  String? @db.VarChar(255)
+  project_bdgeBuser String? @db.VarChar(255)
+  project_bdgeBpass String? @db.VarChar(255)
+  project_liveurl   String? @db.VarChar(255)
+  func_id           Int?
+}
+
+model kb_technology {
+  technology_id   Int    @id @default(autoincrement())
+  technology_name String @db.VarChar(255)
+  tcno_del        Int    @default(0)
+}
+
+model kb_technologyother {
+  technologyother_id   Int     @id @default(autoincrement())
+  technologyother_name String? @db.VarChar(255)
+  project_id           Int?
+}
+
+model kb_techtoproj {
+  tpid          Int @id @default(autoincrement())
+  technology_id Int
+  project_id    Int
+}
+
+model kb_user {
+  user_id       Int    @id @default(autoincrement())
+  pmt_id        Int
+  user_fname    String @db.VarChar(255)
+  user_lname    String @db.VarChar(255)
+  user_email    String @db.VarChar(255)
+  company_id    Int
+  user_password String @db.VarChar(255)
+  user_del      Int    @default(0)
+}
+
+model kb_usertoprojects {
+  up_id     Int                         @id @default(autoincrement())
+  proj_id   Int
+  user_id   Int
+  user_type kb_usertoprojects_user_type
+}
+
+model muzor_categories {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+}
+
+model muzor_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_ho String @default("") @db.VarChar(200)
+}
+
+model muzor_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_ho String @db.Text
+}
+
+model muzor_genres {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+}
+
+model muzor_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(now()) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model muzor_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model muzor_products {
+  id               Int    @id @default(autoincrement())
+  name             String @default("") @db.VarChar(200)
+  title_IDS        Int    @default(0)
+  description_IDT  Int    @default(0)
+  category_id      Int    @default(0)
+  genre_id         Int    @default(0)
+  musicians_IDT    Int    @default(0)
+  level            Int    @default(0)
+  entity           Int    @default(0)
+  price            Int    @default(0)
+  preview_pdf_name String @default("") @db.VarChar(200)
+  preview_mp3_name String @default("") @db.VarChar(200)
+  file_pdf_name    String @default("") @db.VarChar(200)
+  file_mp3_name    String @default("") @db.VarChar(200)
+}
+
+model muzor_users {
+  id          Int       @id @default(autoincrement())
+  create_day  DateTime? @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  fullname    String    @default("") @db.VarChar(200)
+  login       String    @default("") @db.VarChar(100)
+  password    String    @default("") @db.VarChar(100)
+  email       String    @default("") @db.VarChar(200)
+  status      String    @default("USER") @db.VarChar(20)
+  code        String    @default("12345678901234") @db.VarChar(14)
+  description String    @db.Text
+  city_id     Int       @default(0)
+  postal_code String    @default("") @db.VarChar(200)
+  gender      Int       @default(1)
+  birth       DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  phone       String    @default("") @db.VarChar(200)
+  company     String    @default("") @db.VarChar(200)
+  address     String    @default("") @db.VarChar(200)
+  web         String    @default("") @db.VarChar(200)
+  group       Int       @default(0)
+  group_id    Int       @default(0)
+}
+
+model muzor_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(50)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+model picadia_brief {
+  id            Int      @id @default(autoincrement())
+  create_day    DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  aanhef        Int      @default(0)
+  voorletters   String   @default("") @db.VarChar(200)
+  tussenvoegsel String   @default("") @db.VarChar(200)
+  achternaam    String   @default("") @db.VarChar(200)
+  straat        String   @default("") @db.VarChar(200)
+  postcode      String   @default("") @db.VarChar(200)
+  woonplaats    String   @default("") @db.VarChar(200)
+  telefoon      String   @default("") @db.VarChar(200)
+  email         String   @default("") @db.VarChar(200)
+  status        String   @default("ACTIVE") @db.VarChar(20)
+}
+
+model picadia_categories {
+  id          Int    @id @default(autoincrement())
+  id_parent   Int    @default(0)
+  level       Int    @default(0)
+  name        String @default("") @db.VarChar(200)
+  description String @db.Text
+  title       String @default("") @db.VarChar(200)
+  meta_descr  String @db.Text
+  meta_key    String @db.Text
+  prio        Int    @default(1)
+  status      String @default("ACTIVE") @db.VarChar(20)
+  links_count Int    @default(0)
+}
+
+model picadia_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_ho String @default("") @db.VarChar(200)
+}
+
+model picadia_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_ho String @db.Text
+}
+
+model picadia_links {
+  id   Int    @id @default(autoincrement())
+  name String @default("") @db.VarChar(200)
+  url  String @default("") @db.VarChar(200)
+}
+
+model picadia_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model picadia_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model picadia_menus {
+  id   Int    @id @default(autoincrement())
+  name String @default("") @db.VarChar(200)
+}
+
+model picadia_news {
+  id         Int      @id @default(autoincrement())
+  create_day DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day        DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  title      String   @default("") @db.VarChar(200)
+  text       String   @db.Text
+  picture    Int      @default(0)
+  showday    Int      @default(1)
+  division   Int      @default(1)
+  status     String   @default("ACTIVE") @db.VarChar(20)
+  id_product Int      @default(0)
+}
+
+model picadia_pages {
+  id             Int    @id @default(autoincrement())
+  id_menu        Int    @default(0)
+  prio           Int    @default(0)
+  name           String @default("") @db.VarChar(100)
+  title_IDS      Int    @default(0)
+  meta_key_IDS   Int    @default(0)
+  meta_descr_IDS Int    @default(0)
+  body_IDT       Int    @default(0)
+  rule           Int    @default(0)
+}
+
+model picadia_pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @default("") @db.VarChar(100)
+  filename    String @default("") @db.VarChar(200)
+  resize_type Int    @default(1)
+}
+
+model picadia_products {
+  id          Int      @id @default(autoincrement())
+  create_day  DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  name        String   @default("") @db.VarChar(200)
+  name_lit    String   @default("") @db.VarChar(200)
+  description String   @db.Text
+  id_category Int      @default(0)
+  pictures    Int      @default(0)
+  is_favorite Int      @default(0)
+  is_home     Int      @default(0)
+  id_user     Int      @default(0)
+  prio        Int      @default(1)
+}
+
+model picadia_routes {
+  id    Int    @id @default(autoincrement())
+  title String @default("") @db.VarChar(200)
+  text  String @db.Text
+}
+
+model picadia_users {
+  id          Int       @id @default(autoincrement())
+  create_day  DateTime? @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  fullname    String    @default("") @db.VarChar(200)
+  login       String    @default("") @db.VarChar(100)
+  password    String    @default("") @db.VarChar(100)
+  email       String    @default("") @db.VarChar(200)
+  status      String    @default("USER") @db.VarChar(20)
+  code        String    @default("12345678901234") @db.VarChar(14)
+  description String    @db.Text
+}
+
+model picadia_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(50)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+model pmt_bb_email_management {
+  id       Int    @id @default(autoincrement())
+  company  String @db.VarChar(30)
+  name     String @db.VarChar(30)
+  email_id String @unique(map: "email_id") @db.VarChar(40)
+}
+
+model pmt_bug_options {
+  id      BigInt @id @default(autoincrement())
+  type    String @db.VarChar(100)
+  value   String @db.VarChar(200)
+  project BigInt
+}
+
+model pmt_code_review_answers {
+  id                    Int    @id @default(autoincrement())
+  survey_code_review_id Int
+  question_id           Int
+  area_id               Int
+  option_id             Int
+  answer_text           String @db.LongText
+  option_comment        String @db.LongText
+}
+
+model pmt_companies {
+  id          Int    @id @default(autoincrement())
+  name        String @default("") @db.VarChar(200)
+  title_IDS   Int    @default(0)
+  body_IDT    Int    @default(0)
+  country_IDS Int    @default(0)
+  city_IDS    Int    @default(0)
+  address_IDT Int    @default(0)
+  status_id   Int    @default(0)
+  status_name String @default("") @db.VarChar(200)
+}
+
+model pmt_contract_note {
+  id          Int    @id @default(autoincrement())
+  contract_id Int
+  month       Int
+  year        Int
+  note        String @db.Text
+}
+
+model pmt_contracts {
+  id                   Int      @id @default(autoincrement())
+  author               Int?
+  account_manager      String   @db.VarChar(90)
+  created              DateTime @default(now()) @db.Timestamp(0)
+  archived             Boolean
+  client               Int?
+  supplier             Int?
+  suppliers_managers   String?  @db.VarChar(200)
+  suppliers_programmer String?  @db.VarChar(100)
+  calendar_start       String?  @db.VarChar(20)
+  calendar_end         String?  @db.VarChar(20)
+  cl_price             String?  @db.VarChar(11)
+  cl_price_type        Int
+  su_price             String   @db.VarChar(11)
+  su_price_type        Int      @db.MediumInt
+  fix_price            Boolean
+  status               Int      @db.TinyInt
+  stopreason           String   @db.Text
+  stop_status          Int
+  remarks              String?  @db.Text
+}
+
+model pmt_contracts_clients_managers {
+  id          Int @id @default(autoincrement())
+  contract_id Int
+  user_id     Int
+}
+
+model pmt_contracts_files {
+  id          Int    @id @default(autoincrement())
+  contract_id Int
+  filename    String @db.VarChar(75)
+  title       String @db.LongText
+  description String @db.LongText
+}
+
+model pmt_contracts_suppliers_managers {
+  id          Int @id @default(autoincrement())
+  contract_id Int
+  user_id     Int
+}
+
+model pmt_contracts_suppliers_programmers {
+  id          Int @id @default(autoincrement())
+  contract_id Int
+  user_id     Int
+}
+
+model pmt_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_ho String @default("") @db.VarChar(200)
+}
+
+model pmt_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_ho String @db.Text
+}
+
+model pmt_department {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+}
+
+model pmt_dev_client_review_answers {
+  id                   Int    @id @default(autoincrement())
+  client_dev_review_id Int
+  question_id          Int
+  area_id              Int
+  option_id            Int
+  answer_text          String @db.LongText
+  option_comment       String @db.LongText
+}
+
+model pmt_developer_assignment {
+  id              Int      @id @default(autoincrement())
+  dev_id          Int
+  assigned_dev_id Int
+  time            DateTime @db.Date
+}
+
+model pmt_developer_evaluation_review {
+  id              Int    @id @default(autoincrement())
+  survey_id       Int
+  client_id       Int
+  company_id      Int
+  survey_date     String @db.VarChar(50)
+  survey_year     String @db.VarChar(50)
+  survey_month    String @db.VarChar(50)
+  developer_id    Int
+  general_comment String @db.LongText
+}
+
+model pmt_doc_bugs {
+  id              BigInt @id @default(autoincrement())
+  document        BigInt
+  category        BigInt
+  task            BigInt
+  developer       BigInt
+  reproducibility BigInt
+  priority        BigInt
+}
+
+model pmt_doc_modules {
+  id          Int      @id @default(autoincrement())
+  document_id Int      @default(0)
+  num         Int      @default(0)
+  ch_date     Int      @default(0)
+  date_s      DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  date_e      DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  ch_time     Int      @default(0)
+  time        Int      @default(0)
+  title_IDS   Int      @default(0)
+}
+
+model pmt_documents {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  theme_id           Int      @default(0)
+  owner_id           Int      @default(0)
+  name               String   @default("") @db.VarChar(200)
+  title_IDS          Int      @default(0)
+  body_IDT           Int      @default(0)
+  status_id          Int      @default(0)
+  status_name        String   @default("") @db.VarChar(200)
+  source_document_id Int      @default(0)
+  source_company_id  Int      @default(0)
+  show_company_id    Int      @default(0)
+  ch_date            Int      @default(0)
+  f_date_s           DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  f_date_e           DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  ch_time            Int      @default(0)
+  f_time             Int      @default(0)
+  budget_from        Int?
+  budget_to          Int?
+  ch_modules         Int      @default(0)
+  technology_IDT     Int      @default(0)
+  ExtraTextId        Int
+  ExtraDate          DateTime @db.DateTime(0)
+  lastUpdateId       BigInt
+}
+
+model pmt_employee_details {
+  id                   Int       @id @default(autoincrement())
+  user_id              Int
+  designation          String    @db.VarChar(100)
+  department_id        Int
+  joining_date         DateTime  @db.Date
+  bank_ac_number       String    @db.VarChar(100)
+  pan_number           String    @db.VarChar(25)
+  insurance_start_date DateTime? @db.Date
+  insurance_end_date   DateTime? @db.Date
+  gross_pay            Int
+  HRA                  Int
+  medical              Int
+  outfit               Int
+  conveyance_allowance Int
+  other_allowance      Int
+  professional_tax     Int
+  basic_pay            Int
+  pli                  Int
+  esi                  Int
+  is_opt_pf            Int       @db.TinyInt
+  pf_account_number    String    @db.VarChar(100)
+  pf_employeer         Int
+  pf_employee          Int
+  da                   Float     @db.Float
+  wwf_employeer        Int
+  wwf_employee         Int
+  resignation_date     DateTime  @db.Date
+  hold_from            DateTime  @db.Date
+  hold_to              DateTime  @db.Date
+  status               Boolean   @default(false)
+}
+
+model pmt_exceptional_user_lop {
+  id        Int   @id @default(autoincrement())
+  year      Int
+  user_id   Int
+  january   Float @db.Float
+  february  Float @db.Float
+  march     Float @db.Float
+  april     Float @db.Float
+  may       Float @db.Float
+  june      Float @db.Float
+  july      Float @db.Float
+  august    Float @db.Float
+  september Float @db.Float
+  october   Float @db.Float
+  november  Float @db.Float
+  december  Float @db.Float
+}
+
+model pmt_files {
+  id          Int    @id @default(autoincrement())
+  document_id Int    @default(0)
+  name        String @default("") @db.VarChar(200)
+  title_IDS   Int    @default(0)
+  body_IDT    Int    @default(0)
+  ext         String @default("") @db.VarChar(20)
+  status_id   Int    @default(0)
+  status_name String @default("") @db.VarChar(200)
+}
+
+model pmt_formats {
+  id   Int    @id @default(autoincrement())
+  name String @default("") @db.VarChar(200)
+}
+
+model pmt_goals {
+  id              Int    @id @default(autoincrement())
+  company_id      Int
+  developer_id    Int
+  quarter         String @db.VarChar(20)
+  productive_year String @db.VarChar(10)
+  goal_point      Float  @db.Float
+  goals           String @db.LongText
+}
+
+model pmt_holiday {
+  id                  Int      @id @default(autoincrement())
+  holiday_title       String   @db.VarChar(255)
+  holiday_start_date  DateTime @db.Date
+  holiday_end_date    DateTime @db.Date
+  holiday_description String   @db.Text
+  holiday_remarks     String   @db.Text
+  holiday_type_id     Int
+  status              Int
+  year                Int
+}
+
+model pmt_holiday_type {
+  id           Int    @id @default(autoincrement())
+  holiday_name String @db.VarChar(225)
+  status       Int
+}
+
+model pmt_hour_activity {
+  id       Int    @id @default(autoincrement())
+  code     String @db.VarChar(30)
+  name     String @db.VarChar(30)
+  act_show Int
+}
+
+model pmt_hour_register {
+  id          Int          @id @default(autoincrement())
+  user        pmt_users    @relation(fields: [user_id], references: [id])
+  user_id     Int
+  pdate       DateTime     @db.Date
+  hours       Float        @db.Float
+  proj        pmt_projects @relation(fields: [proj_id], references: [id])
+  proj_id     Int
+  activity    String       @db.VarChar(20)
+  description String       @db.Text
+  extra_work  Int
+}
+
+model pmt_hour_reporter {
+  id         Int    @id @default(autoincrement())
+  company_id Int
+  name       String @db.VarChar(300)
+  email      String @db.VarChar(300)
+}
+
+model pmt_interviews {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  client_info String   @db.Text
+  status      Int      @default(2)
+  date        DateTime @db.Date
+}
+
+model pmt_invoice {
+  id                                     Int     @id @default(autoincrement())
+  contract_id                            Int
+  month                                  Int
+  year                                   Int
+  invoice_belongs_month                  Int
+  invoice_belongs_year                   Int
+  su_programmer                          String  @db.VarChar(255)
+  invoice_number                         String  @db.VarChar(25)
+  invoice_date                           String  @db.VarChar(255)
+  invoice_due_date                       String  @db.VarChar(255)
+  invoice_status                         String  @db.VarChar(30)
+  cl_price                               Int
+  cl_price_note                          String  @db.Text
+  acc_manager_price                      Int
+  acc_manager_price_note                 String  @db.Text
+  su_price                               Int
+  su_price_note                          String  @db.Text
+  cl_credit_amount                       Float   @db.Float
+  cl_credit_amount_note                  String  @db.Text
+  cl_debit_amount                        Float   @db.Float
+  cl_debit_amount_note                   String  @db.Text
+  su_credit_amount                       Float   @db.Float
+  su_credit_amount_note                  String  @db.Text
+  su_debit_amount                        Float   @db.Float
+  su_debit_amount_note                   String  @db.Text
+  external_supplier                      String  @db.VarChar(100)
+  external_supplier_invoice              String  @db.VarChar(25)
+  external_supplier_invoiced_amount      Int
+  external_supplier_invoiced_amount_note String  @db.Text
+  external_supplier_paid_amount          Int
+  external_supplier_paid_amount_note     String  @db.Text
+  external_supplier_payment_status       String  @db.VarChar(30)
+  external_supplier_payment_date         String  @db.VarChar(255)
+  status                                 Boolean
+  status_note                            String  @db.Text
+}
+
+model pmt_languages {
+  id          Int    @id @default(autoincrement())
+  lang        String @default("") @db.VarChar(10)
+  name        String @default("") @db.VarChar(200)
+  title       String @default("") @db.VarChar(200)
+  description String @db.Text
+  prio        Int    @default(1)
+  status      String @default("ACTIVE") @db.VarChar(20)
+}
+
+model pmt_leave {
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  leave_type_id    Int
+  leave_start_date DateTime @db.Date
+  leave_end_date   DateTime @db.Date
+  leave_nature     Int
+  leave_session    Int
+  reason           String   @db.Text
+  applied_date     DateTime @db.Date
+  status           Int
+  marked_as_lop    Int      @default(0)
+}
+
+model pmt_leave_confirmation_mail {
+  id                Int    @id @default(autoincrement())
+  leave_type        String @db.VarChar(100)
+  mail_details_json String @db.LongText
+  send_date         String @db.VarChar(50)
+  mail_send_status  Int
+}
+
+model pmt_leave_type {
+  id             Int    @id @default(autoincrement())
+  leave_name     String @db.VarChar(225)
+  number_of_days Int
+  status         Int
+}
+
+model pmt_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(now()) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+  id_user            Int      @default(0)
+  id_project         Int      @default(0)
+}
+
+model pmt_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model pmt_mentee_evaluation_review {
+  id              Int    @id @default(autoincrement())
+  survey_id       Int
+  mentee_id       Int
+  company_id      Int
+  survey_date     String @db.VarChar(100)
+  survey_year     Int
+  survey_month    Int
+  mentor_id       Int
+  general_comment String @db.LongText
+}
+
+model pmt_mentor_evaluation_review {
+  id              Int    @id @default(autoincrement())
+  survey_id       Int
+  mentor_id       Int
+  company_id      Int
+  survey_date     String @db.VarChar(100)
+  survey_year     Int
+  survey_month    Int
+  mentee_id       Int
+  general_comment String @db.LongText
+}
+
+model pmt_mentor_mentee {
+  id                   Int @id @default(autoincrement())
+  user_id              Int
+  type                 Int
+  mentor_id            Int
+  parent_mentor        Int
+  set_mentee_as_mentor Int
+  assignee_id          Int
+}
+
+model pmt_menu {
+  id        Int    @id @default(autoincrement())
+  level     Int    @default(0)
+  name      String @default("") @db.VarChar(200)
+  title_IDS Int    @default(0)
+  body_IDT  Int    @default(0)
+}
+
+model pmt_news {
+  id         Int      @id @default(autoincrement())
+  create_day DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day        DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  title      String   @default("") @db.VarChar(200)
+  text       String   @db.Text
+  picture    Int      @default(0)
+  showday    Int      @default(1)
+  division   Int      @default(1)
+  status     String   @default("ACTIVE") @db.VarChar(20)
+  id_product Int      @default(0)
+}
+
+model pmt_pages {
+  id             Int    @id @default(autoincrement())
+  id_menu        Int    @default(0)
+  prio           Int    @default(0)
+  name           String @default("") @db.VarChar(200)
+  title_IDS      Int    @default(0)
+  meta_key_IDS   Int    @default(0)
+  meta_descr_IDS Int    @default(0)
+  body_IDT       Int    @default(0)
+  rule           Int    @default(0)
+}
+
+model pmt_pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @default("") @db.VarChar(100)
+  filename    String @default("") @db.VarChar(200)
+  resize_type Int    @default(1)
+}
+
+model pmt_productivity {
+  id                 Int      @id @default(autoincrement())
+  company_id         Int
+  developer_id       Int
+  quarter            String   @db.VarChar(20)
+  productive_year    String   @db.VarChar(10)
+  total_hours        String   @db.VarChar(10)
+  productivity_hours String   @db.VarChar(10)
+  billed_hours       String   @db.VarChar(10)
+  pm_id              Int
+  creation_date      DateTime @db.Date
+
+  @@unique([company_id, developer_id, quarter, productive_year], map: "company_id_developer_id_quarter_productive_year")
+}
+
+model pmt_project_companies {
+  id          Int    @id @default(autoincrement())
+  project_id  Int    @default(0)
+  company_id  Int    @default(0)
+  status_id   Int    @default(0)
+  status_name String @default("") @db.VarChar(200)
+}
+
+model pmt_project_users {
+  id          Int    @id @default(autoincrement())
+  project_id  Int    @default(0)
+  user_id     Int    @default(0)
+  company_id  Int    @default(0)
+  status_id   Int    @default(0)
+  status_name String @default("") @db.VarChar(200)
+}
+
+model pmt_projects {
+  id                Int                   @id @default(autoincrement())
+  project_key       Int
+  create_day        DateTime              @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  owner_id          Int                   @default(0)
+  name              String                @default("") @db.VarChar(200)
+  title_IDS         Int                   @default(0)
+  body_IDT          Int                   @default(0)
+  status_id         Int                   @default(0)
+  status_name       String                @default("") @db.VarChar(200)
+  ch_date           Int                   @default(0)
+  f_date_s          DateTime              @default(dbgenerated("'0000-00-00'")) @db.Date
+  f_date_e          DateTime              @default(dbgenerated("'0000-00-00'")) @db.Date
+  ch_time           Int                   @default(0)
+  f_time            Int                   @default(0)
+  ch_modules        Int                   @default(0)
+  parent            Int                   @default(0)
+  pmOpened          pmt_projects_pmOpened
+  BckUpSt           Int
+  pmt_hour_register pmt_hour_register[]
+}
+
+model pmt_role {
+  id      Int @id @default(autoincrement())
+  user_id Int
+  role_id Int
+}
+
+model pmt_rules_memos {
+  id          Int    @id @default(autoincrement())
+  filename    String @db.VarChar(250)
+  description String @db.Text
+  status      Int
+}
+
+model pmt_salary_note {
+  id          Int    @id @default(autoincrement())
+  month       Int
+  year        Int
+  note        String @db.Text
+  prepared_by Int
+}
+
+model pmt_salary_sheet {
+  id                        Int     @id @default(autoincrement())
+  user_id                   Int
+  month                     Int
+  year                      Int
+  total_working_days        Int
+  Lop_days                  Float   @db.Float
+  Paid_days                 Float   @db.Float
+  basic_pay                 Int
+  HRA                       Int
+  medical                   Int
+  conveyance_allowance      Int
+  outfit                    Int
+  other_allowance           Int
+  pli                       Int
+  professional_tax          Int
+  TDS                       Int
+  arrear_salary             Float   @db.Float
+  arrear_salary_note        String  @db.Text
+  incentive                 Int
+  incentive_note            String  @db.Text
+  LOP                       Int
+  LOP_note                  String  @db.Text
+  common_deduction          Int
+  common_deduction_note     String  @db.Text
+  individual_deduction      Int
+  individual_deduction_note String  @db.Text
+  employee_hold             Boolean
+  employee_hold_note        String  @db.Text
+  esi                       Int
+  pf_employeer              Int
+  pf_employee               Int
+  da                        Float   @db.Float
+  wwf_employeer             Int
+  wwf_employee              Int
+  gross_pay                 Int
+  net_pay                   Int
+  prepared_by               Int
+}
+
+model pmt_statuses {
+  id        Int    @id @default(autoincrement())
+  id_format Int    @default(0)
+  name      String @default("") @db.VarChar(200)
+  title_IDS Int    @default(0)
+  body_IDT  Int    @default(0)
+}
+
+model pmt_survey {
+  id             BigInt  @id @default(autoincrement())
+  survey_name    String  @db.VarChar(100)
+  survey_type_id Int
+  finish         Boolean @default(false)
+  active         Int
+}
+
+model pmt_survey_360 {
+  id           Int      @id @default(autoincrement())
+  evaluee_id   Int
+  evaluator_id Int
+  survey_id    Int
+  survey_month Int
+  survey_year  Int
+  end_date     DateTime @db.Date
+  sent_by      Int
+  sent_date    DateTime @db.DateTime(0)
+  finish       Int      @db.TinyInt
+}
+
+model pmt_survey_answers {
+  id             BigInt @id @default(autoincrement())
+  sent_id        BigInt
+  area_id        BigInt
+  question_id    BigInt
+  option_id      BigInt
+  answer_text    String @db.Text
+  option_comment String @db.Text
+}
+
+model pmt_survey_answers_general {
+  id            BigInt @id @default(autoincrement())
+  evaluation_id BigInt
+  question_id   BigInt
+  answer_id     BigInt
+  comment       String @db.Text
+}
+
+model pmt_survey_area {
+  id            BigInt @id
+  survey_id     BigInt
+  area_name     String @db.VarChar(100)
+  sub_question  String @db.VarChar(250)
+  option_set_id Int
+}
+
+model pmt_survey_assigned {
+  id        Int @id @default(autoincrement())
+  survey_id Int
+  dev_id    Int
+  status    Int
+}
+
+model pmt_survey_code_review {
+  id           Int    @id @default(autoincrement())
+  survey_id    Int
+  developer_id Int
+  company      Int
+  survey_date  String @db.VarChar(45)
+  survey_year  String @db.VarChar(20)
+  survey_month String @db.VarChar(20)
+  pm_id        Int
+}
+
+model pmt_survey_content_type {
+  id           Int    @id @default(autoincrement())
+  content_type String @db.VarChar(100)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model pmt_survey_feedback {
+  survey_sent_id  Int
+  feedback_status pmt_survey_feedback_feedback_status @default(dbgenerated("1"))
+
+  @@ignore
+}
+
+model pmt_survey_general_evaluations {
+  id        BigInt   @id
+  survey_id BigInt
+  client_id BigInt
+  devid     BigInt
+  s_month   Int
+  s_year    BigInt
+  date      DateTime @db.Date
+}
+
+model pmt_survey_option_set {
+  id              Int    @id @default(autoincrement())
+  option_set_name String @db.VarChar(100)
+}
+
+model pmt_survey_options {
+  id            BigInt @id @default(autoincrement())
+  option_set_id Int
+  option_name   String @db.VarChar(100)
+  option_value  Int
+}
+
+model pmt_survey_pages {
+  id              BigInt @id @default(autoincrement())
+  survey_id       BigInt
+  page_id         BigInt
+  content_type_id Int
+  text_content    String @db.Text
+  area_id         BigInt
+  intro_text      String @db.Text
+}
+
+model pmt_survey_questions {
+  id            BigInt @id
+  survey_id     BigInt
+  area_id       Int
+  question      String @db.Text
+  option_set_id Int
+}
+
+model pmt_survey_questions_general {
+  id          BigInt @id
+  survey_id   BigInt
+  question    String @db.Text
+  client_id   Int
+  dev_id      Int
+  contract_id Int
+}
+
+model pmt_survey_sent {
+  id              BigInt   @id @default(autoincrement())
+  company         Int
+  client_id       Int
+  pm_id           Int
+  developer_id    Int
+  survey_id       Int
+  survey_month    Int
+  survey_year     Int
+  sent_by         Int
+  sent_date       DateTime @db.DateTime(0)
+  contract_id     BigInt
+  finish          Boolean  @default(false)
+  feedback_status Int      @default(0) @map("360feedback_status")
+}
+
+model pmt_surveytype {
+  id          Int    @id @default(autoincrement())
+  survey_type String @db.VarChar(100)
+}
+
+model pmt_themes {
+  id          Int      @id @default(autoincrement())
+  create_day  DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  project_id  Int      @default(0)
+  owner_id    Int      @default(0)
+  name        String   @default("") @db.VarChar(200)
+  title_IDS   Int      @default(0)
+  body_IDT    Int      @default(0)
+  status_id   Int      @default(0)
+  status_name String   @default("") @db.VarChar(200)
+}
+
+model pmt_todo {
+  id        Int    @id @default(autoincrement())
+  user_id   Int
+  date      String @db.VarChar(20)
+  task      String @db.Text
+  start     String @db.VarChar(20)
+  end       String @db.VarChar(20)
+  completed Int
+}
+
+model pmt_todo_permission {
+  id               Int    @id @default(autoincrement())
+  user_id          Int
+  assigned_user_id String @db.VarChar(255)
+}
+
+model pmt_todo_questions {
+  id        Int    @id @default(autoincrement())
+  user_id   Int
+  todo_id   Int
+  questions String @db.Text
+}
+
+model pmt_total_leave_balance {
+  id                   Int   @id @default(autoincrement())
+  user_id              Int
+  balance_casual_leave Float @db.Float
+  balance_sick_leave   Float @db.Float
+  casual_lop           Float @db.Float
+  sick_lop             Float @db.Float
+  year                 Int
+}
+
+model pmt_tracker {
+  id                   Int      @id @default(autoincrement())
+  user_id              Int      @unique(map: "user_id")
+  contract_stop_status Int
+  notice_period        Int
+  period_start_date    DateTime @db.Date
+  interviews           Int
+  date                 DateTime @db.Date
+  message_id           Int      @default(0)
+}
+
+model pmt_tracker_removed {
+  id      Int @id @default(autoincrement())
+  user_id Int
+}
+
+model pmt_usa_holiday {
+  id                  Int      @id @default(autoincrement())
+  holiday_title       String   @db.VarChar(255)
+  holiday_start_date  DateTime @db.Date
+  holiday_end_date    DateTime @db.Date
+  holiday_description String   @db.Text
+  holiday_remarks     String   @db.Text
+  holiday_type_id     Int
+  status              Int
+  year                Int
+}
+
+model pmt_user_month_lop {
+  id            Int   @id @default(autoincrement())
+  year          Int
+  user_id       Int
+  leave_type_id Int
+  january       Float @db.Float
+  february      Float @db.Float
+  march         Float @db.Float
+  april         Float @db.Float
+  may           Float @db.Float
+  june          Float @db.Float
+  july          Float @db.Float
+  august        Float @db.Float
+  september     Float @db.Float
+  october       Float @db.Float
+  november      Float @db.Float
+  december      Float @db.Float
+}
+
+model pmt_user_optional_holiday {
+  id                Int @id @default(autoincrement())
+  user_id           Int
+  optional_leave_id Int
+  reminder          Int
+}
+
+model pmt_users {
+  id                Int                         @id @default(autoincrement())
+  create_day        DateTime?                   @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  name              String                      @default("") @db.VarChar(200)
+  employee_code     Int
+  title_IDS         Int                         @default(0)
+  body_IDT          Int                         @default(0)
+  login             String                      @default("") @db.VarChar(100)
+  password          String                      @db.VarChar(255)
+  email             String                      @default("") @db.VarChar(200)
+  gender            Int                         @default(1)
+  birth             DateTime                    @default(dbgenerated("'0000-00-00'")) @db.Date
+  company_id        Int                         @default(0)
+  address_IDT       Int                         @default(0)
+  job_title_IDS     Int                         @default(0)
+  phone             String                      @default("") @db.VarChar(200)
+  address           String                      @db.Text
+  personal_email_id String                      @db.VarChar(250)
+  skype_id          String                      @db.VarChar(250)
+  joining_date      DateTime                    @db.Date
+  confirmation_date DateTime                    @db.Date
+  code              String                      @default("") @db.VarChar(20)
+  status_id         Int                         @default(0)
+  status_name       String                      @default("") @db.VarChar(200)
+  active_user       Int                         @default(1)
+  employment_status pmt_users_employment_status @default(dbgenerated("2"))
+  production        pmt_users_production        @default(no)
+  pmt_hour_register pmt_hour_register[]
+}
+
+model pmt_users_combo_casual {
+  id                     BigInt   @id @default(autoincrement())
+  user_id                BigInt
+  number_days_casual     Float    @db.Float
+  number_days_sick       Float    @db.Float
+  number_days_casual_lop Float    @db.Float
+  number_days_sick_lop   Float    @db.Float
+  added_on               DateTime @db.Date
+  action                 String   @db.VarChar(250)
+  reason                 String   @db.VarChar(250)
+}
+
+model pmt_users_overview {
+  id          Int    @id @default(autoincrement())
+  id_user     Int    @default(0)
+  is_all      Int    @default(0)
+  is_my       Int    @default(0)
+  is_new      Int    @default(0)
+  is_other    Int    @default(0)
+  is_archive  Int    @default(0)
+  select      String @default("") @db.VarChar(20)
+  order_1     String @default("") @db.VarChar(20)
+  order_2     String @default("") @db.VarChar(20)
+  order_3     String @default("") @db.VarChar(20)
+  direction_1 Int    @default(0)
+  direction_2 Int    @default(0)
+  direction_3 Int    @default(0)
+}
+
+model pmt_users_overview_arh_projects {
+  id          Int    @id @default(autoincrement())
+  id_user     Int    @default(0)
+  is_all      Int    @default(0)
+  is_my       Int    @default(0)
+  is_new      Int    @default(0)
+  is_other    Int    @default(0)
+  is_archive  Int    @default(0)
+  select      String @default("") @db.VarChar(20)
+  order_1     String @default("") @db.VarChar(20)
+  order_2     String @default("") @db.VarChar(20)
+  order_3     String @default("") @db.VarChar(20)
+  direction_1 Int    @default(0)
+  direction_2 Int    @default(0)
+  direction_3 Int    @default(0)
+}
+
+model pmt_users_overview_my_projects {
+  id          Int    @id @default(autoincrement())
+  id_user     Int    @default(0)
+  is_all      Int    @default(0)
+  is_my       Int    @default(0)
+  is_new      Int    @default(0)
+  is_other    Int    @default(0)
+  is_archive  Int    @default(0)
+  select      String @default("") @db.VarChar(20)
+  order_1     String @default("") @db.VarChar(20)
+  order_2     String @default("") @db.VarChar(20)
+  order_3     String @default("") @db.VarChar(20)
+  direction_1 Int    @default(0)
+  direction_2 Int    @default(0)
+  direction_3 Int    @default(0)
+}
+
+model pmt_users_overview_new_projects {
+  id          Int    @id @default(autoincrement())
+  id_user     Int    @default(0)
+  is_all      Int    @default(0)
+  is_my       Int    @default(0)
+  is_new      Int    @default(0)
+  is_other    Int    @default(0)
+  is_archive  Int    @default(0)
+  select      String @default("") @db.VarChar(20)
+  order_1     String @default("") @db.VarChar(20)
+  order_2     String @default("") @db.VarChar(20)
+  order_3     String @default("") @db.VarChar(20)
+  direction_1 Int    @default(0)
+  direction_2 Int    @default(0)
+  direction_3 Int    @default(0)
+}
+
+model pmt_users_overview_other_projects {
+  id          Int    @id @default(autoincrement())
+  id_user     Int    @default(0)
+  is_all      Int    @default(0)
+  is_my       Int    @default(0)
+  is_new      Int    @default(0)
+  is_other    Int    @default(0)
+  is_archive  Int    @default(0)
+  select      String @default("") @db.VarChar(20)
+  order_1     String @default("") @db.VarChar(20)
+  order_2     String @default("") @db.VarChar(20)
+  order_3     String @default("") @db.VarChar(20)
+  direction_1 Int    @default(0)
+  direction_2 Int    @default(0)
+  direction_3 Int    @default(0)
+}
+
+model pmt_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(50)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model pmt_view_leavecalculation {
+  LeaveId      Int @db.TinyInt
+  UserId       Int @db.TinyInt
+  EmployeeName Int @db.TinyInt
+  StartDate    Int @db.TinyInt
+  EndDate      Int @db.TinyInt
+  HrDiff       Int @db.TinyInt
+  LeaveReason  Int @db.TinyInt
+  LeaveName    Int @db.TinyInt
+
+  @@ignore
+}
+
+model pmt_warning_messages {
+  id      Int    @id @default(autoincrement())
+  message String @db.Text
+}
+
+model spi_rules {
+  id        Int     @id @default(autoincrement())
+  spider_id Int?
+  name      String? @db.Text
+  rule      String? @db.Text
+}
+
+model spi_spiders {
+  id   Int     @id @default(autoincrement())
+  name String? @db.Text
+  url  String? @db.Text
+}
+
+model spider_1 {
+  id     Int     @id @default(autoincrement())
+  froms  String? @db.Text
+  price  String? @db.Text
+  volume String? @db.Text
+  rooms  String? @db.Text
+  year   String? @db.Text
+  sort   String? @db.Text
+}
+
+model spider_12 {
+  id    Int     @id @default(autoincrement())
+  froms String? @db.Text
+  price String? @db.Text
+  year  String? @db.Text
+}
+
+model spider_23 {
+  id    Int     @id @default(autoincrement())
+  froms String? @db.Text
+  price String? @db.Text
+}
+
+model spider_26 {
+  id    Int     @id @default(autoincrement())
+  froms String? @db.Text
+}
+
+model spider_hw_1 {
+  id      Int     @id @default(autoincrement())
+  froms   String? @db.Text
+  checked Int?    @default(0)
+  price   String? @db.Text
+  volume  String? @db.Text
+  rooms   String? @db.Text
+  year    String? @db.Text
+  sort    String? @db.Text
+}
+
+model spider_hw_12 {
+  id      Int     @id @default(autoincrement())
+  froms   String? @db.Text
+  checked Int?    @default(0)
+  price   String? @db.Text
+  year    String? @db.Text
+}
+
+model spider_hw_23 {
+  id      Int     @id @default(autoincrement())
+  froms   String? @db.Text
+  checked Int?    @default(0)
+  price   String? @db.Text
+}
+
+model spider_hw_24 {
+  id      Int     @id @default(autoincrement())
+  froms   String? @db.Text
+  checked Int?    @default(0)
+}
+
+model spider_hw_25 {
+  id      Int     @id @default(autoincrement())
+  froms   String? @db.Text
+  checked Int?    @default(0)
+}
+
+model spider_hw_26 {
+  id      Int     @id @default(autoincrement())
+  froms   String? @db.Text
+  checked Int?    @default(0)
+}
+
+model vididoc__categories {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+  level           Int    @default(0)
+  parent_id       Int    @default(0)
+  group_id        Int    @default(0)
+  prio            Int    @default(1)
+  prio_group      Int    @default(1)
+  module_IDS      Int    @default(0)
+  page_id         Int    @default(0)
+}
+
+model vididoc__data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_ru String @default("") @db.VarChar(200)
+  data_ua String @default("") @db.VarChar(200)
+}
+
+model vididoc__data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_ru String @db.Text
+  data_ua String @db.Text
+}
+
+model vididoc__languages {
+  id          Int    @id @default(autoincrement())
+  lang        String @default("") @db.VarChar(10)
+  name        String @default("") @db.VarChar(200)
+  title       String @default("") @db.VarChar(200)
+  description String @db.Text
+  prio        Int    @default(1)
+  status      String @default("ACTIVE") @db.VarChar(20)
+}
+
+model vididoc__log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(now()) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model vididoc__log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model vididoc__menu {
+  id       Int                     @id @default(autoincrement())
+  title    String?                 @default("") @db.VarChar(100)
+  position vididoc__menu_position?
+  number   Int?
+  parent   Int?                    @default(0)
+  linkto   vididoc__menu_linkto?   @default(NONE)
+  linkid   Int?                    @default(0)
+  linkstr  String?                 @default("") @db.VarChar(255)
+  openin   vididoc__menu_openin?   @default(CA)
+  nwwidth  Int?                    @default(0)
+  nwheight Int?                    @default(0)
+}
+
+model vididoc__news {
+  id              Int      @id @default(autoincrement())
+  create_day      DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day             DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  day_end         DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  name            String   @default("") @db.VarChar(200)
+  title_IDS       Int      @default(0)
+  description_IDT Int      @default(0)
+  picture         Int      @default(0)
+  showday         Int      @default(1)
+  division        Int      @default(1)
+  status          String   @default("ACTIVE") @db.VarChar(20)
+  id_product      Int      @default(0)
+}
+
+model vididoc__pages {
+  id             Int    @id @default(autoincrement())
+  id_menu        Int    @default(0)
+  prio           Int    @default(0)
+  name           String @default("") @db.VarChar(100)
+  title_IDS      Int    @default(0)
+  meta_key_IDS   Int    @default(0)
+  meta_descr_IDS Int    @default(0)
+  body_IDT       Int    @default(0)
+  rule           Int    @default(0)
+  picture_onebig Int    @default(0)
+  picture_littl  Int    @default(0)
+  picture_littr  Int    @default(0)
+  picture_litbl  Int    @default(0)
+  picture_litbr  Int    @default(0)
+}
+
+model vididoc__pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @default("") @db.VarChar(100)
+  filename    String @default("") @db.VarChar(200)
+  resize_type Int    @default(1)
+  type        Int    @default(0)
+  width       Int    @default(0)
+  height      Int    @default(0)
+}
+
+model vididoc__products {
+  id              Int      @id @default(autoincrement())
+  create_day      DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  name            String   @default("") @db.VarChar(200)
+  minititle_IDS   Int      @default(0)
+  title_IDS       Int      @default(0)
+  description_IDT Int      @default(0)
+  status          String   @default("ACTIVE") @db.VarChar(20)
+  category_id     Int      @default(0)
+  module_IDS      Int      @default(0)
+  page_id         Int      @default(0)
+}
+
+model vididoc__users {
+  id          Int       @id @default(autoincrement())
+  create_day  DateTime? @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  fullname    String    @default("") @db.VarChar(200)
+  login       String    @default("") @db.VarChar(100)
+  password    String    @default("") @db.VarChar(100)
+  email       String    @default("") @db.VarChar(200)
+  status      String    @default("USER") @db.VarChar(20)
+  code        String    @default("12345678901234") @db.VarChar(14)
+  description String    @db.Text
+  postal_code String    @default("") @db.VarChar(200)
+  gender      Int       @default(1)
+  birth       DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  phone       String    @default("") @db.VarChar(200)
+  company     String    @default("") @db.VarChar(200)
+  address     String    @default("") @db.VarChar(200)
+  web         String    @default("") @db.VarChar(200)
+}
+
+model vididoc__variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(200)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+model vididoc__words {
+  id       Int    @id @default(autoincrement())
+  module   String @default("") @db.VarChar(200)
+  variable String @default("") @db.VarChar(200)
+  data_en  String @db.Text
+  data_ru  String @db.Text
+  data_ua  String @db.Text
+}
+
+model vididoc_areas {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+  region_id       Int    @default(0)
+}
+
+model vididoc_banners {
+  id         Int      @id @default(autoincrement())
+  create_day DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day        DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  day_end    DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  title      String   @default("") @db.VarChar(200)
+  url        String   @default("") @db.VarChar(200)
+  picture    String   @default("") @db.VarChar(200)
+  position   Int      @default(0)
+  views      Int      @default(0)
+  clicks     Int      @default(0)
+  status     String   @default("ACTIVE") @db.VarChar(20)
+}
+
+model vididoc_blog {
+  id         Int      @id @default(autoincrement())
+  create_day DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  id_video   Int      @default(0)
+  id_user    Int      @default(0)
+  message    String   @db.Text
+  ip         String   @default("") @db.VarChar(20)
+}
+
+model vididoc_categories {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+  owner_id        Int    @default(0)
+}
+
+model vididoc_cities {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+  area_id         Int    @default(0)
+}
+
+model vididoc_companies {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+  city_id         Int    @default(0)
+  mobile          String @default("") @db.VarChar(200)
+  fax             String @default("") @db.VarChar(200)
+  bank_1          String @default("") @db.VarChar(200)
+  bank_2          String @default("") @db.VarChar(200)
+}
+
+model vididoc_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @default("") @db.VarChar(200)
+  data_ho String @default("") @db.VarChar(200)
+}
+
+model vididoc_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_ho String @db.Text
+}
+
+model vididoc_favorites {
+  id       Int @id @default(autoincrement())
+  id_user  Int @default(0)
+  id_video Int @default(0)
+}
+
+model vididoc_genders {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+}
+
+model vididoc_hists {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+  city_id         Int    @default(0)
+  mobile          String @default("") @db.VarChar(200)
+  fax             String @default("") @db.VarChar(200)
+}
+
+model vididoc_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(now()) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model vididoc_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model vididoc_menus {
+  id         Int    @id @default(autoincrement())
+  name       String @default("") @db.VarChar(200)
+  name_IDS   Int    @default(0)
+  page_id    Int    @default(0)
+  url        String @default("") @db.VarChar(200)
+  page_block Int    @default(1)
+  prio       Int    @default(0)
+}
+
+model vididoc_news {
+  id         Int      @id @default(autoincrement())
+  create_day DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day        DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  day_end    DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  title      String   @default("") @db.VarChar(200)
+  text       String   @db.Text
+  picture    Int      @default(0)
+  showday    Int      @default(1)
+  division   Int      @default(1)
+  status     String   @default("ACTIVE") @db.VarChar(20)
+  id_product Int      @default(0)
+}
+
+model vididoc_owners {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+}
+
+model vididoc_pages {
+  id             Int    @id @default(autoincrement())
+  id_menu        Int    @default(0)
+  prio           Int    @default(0)
+  name           String @default("") @db.VarChar(100)
+  title_IDS      Int    @default(0)
+  meta_key_IDS   Int    @default(0)
+  meta_descr_IDS Int    @default(0)
+  body_IDT       Int    @default(0)
+  rule           Int    @default(0)
+}
+
+model vididoc_pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @default("") @db.VarChar(100)
+  filename    String @default("") @db.VarChar(200)
+  resize_type Int    @default(1)
+  type        Int    @default(0)
+  width       Int    @default(0)
+  height      Int    @default(0)
+}
+
+model vididoc_rates {
+  id       Int @id @default(autoincrement())
+  user_id  Int @default(0)
+  video_id Int @default(0)
+  rate     Int @default(0)
+}
+
+model vididoc_regions {
+  id              Int    @id @default(autoincrement())
+  name            String @default("") @db.VarChar(200)
+  title_IDS       Int    @default(0)
+  description_IDT Int    @default(0)
+}
+
+model vididoc_users {
+  id          Int       @id @default(autoincrement())
+  create_day  DateTime? @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  fullname    String    @default("") @db.VarChar(200)
+  login       String    @default("") @db.VarChar(100)
+  password    String    @default("") @db.VarChar(100)
+  email       String    @default("") @db.VarChar(200)
+  status      String    @default("USER") @db.VarChar(20)
+  code        String    @default("12345678901234") @db.VarChar(14)
+  description String    @db.Text
+  city_id     Int       @default(0)
+  postal_code String    @default("") @db.VarChar(200)
+  gender      Int       @default(1)
+  birth       DateTime  @default(dbgenerated("'0000-00-00'")) @db.Date
+  phone       String    @default("") @db.VarChar(200)
+  company     String    @default("") @db.VarChar(200)
+  address     String    @default("") @db.VarChar(200)
+  web         String    @default("") @db.VarChar(200)
+  group       Int       @default(0)
+  group_id    Int       @default(0)
+}
+
+model vididoc_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @default("") @db.VarChar(50)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+model vididoc_videos {
+  id              Int      @id @default(autoincrement())
+  create_day      DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  name            String   @default("") @db.VarChar(200)
+  title_IDS       Int      @default(0)
+  description_IDT Int      @default(0)
+  tags_IDT        Int      @default(0)
+  status          String   @default("NEW") @db.VarChar(20)
+  city_id         Int      @default(0)
+  owner_id        Int      @default(0)
+  user_id         Int      @default(0)
+  admin_id        Int      @default(0)
+  company_id      Int      @default(0)
+  hist_id         Int      @default(0)
+  category_id     Int      @default(0)
+  rate            Int      @default(0)
+  views           Int      @default(0)
+  votings         Int      @default(0)
+  points          Int      @default(0)
+}
+
+model whb_brief {
+  id            Int      @id @default(autoincrement())
+  create_day    DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  aanhef        Int      @default(0)
+  voorletters   String   @db.VarChar(200)
+  tussenvoegsel String   @db.VarChar(200)
+  achternaam    String   @db.VarChar(200)
+  straat        String   @db.VarChar(200)
+  postcode      String   @db.VarChar(200)
+  woonplaats    String   @db.VarChar(200)
+  telefoon      String   @db.VarChar(200)
+  email         String   @db.VarChar(200)
+  status        String   @default("ACTIVE") @db.VarChar(20)
+}
+
+model whb_categories {
+  id          Int    @id @default(autoincrement())
+  id_parent   Int    @default(0)
+  level       Int    @default(0)
+  name        String @db.VarChar(200)
+  description String @db.Text
+  title       String @db.VarChar(200)
+  meta_descr  String @db.Text
+  meta_key    String @db.Text
+  prio        Int    @default(1)
+  status      String @default("ACTIVE") @db.VarChar(20)
+  links_count Int    @default(0)
+}
+
+model whb_data_string {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.VarChar(200)
+  data_ho String @db.VarChar(200)
+}
+
+model whb_data_text {
+  id      Int    @id @default(autoincrement())
+  data_en String @db.Text
+  data_ho String @db.Text
+}
+
+model whb_links {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(200)
+  url  String @db.VarChar(200)
+}
+
+model whb_log {
+  id                 Int      @id @default(autoincrement())
+  create_day         DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.Timestamp(0)
+  id_log_description Int      @default(0)
+  id_row             Int      @default(0)
+}
+
+model whb_log_description {
+  id          Int    @id @default(autoincrement())
+  description String @db.Text
+}
+
+model whb_menus {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(200)
+}
+
+model whb_news {
+  id         Int      @id @default(autoincrement())
+  create_day DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  day        DateTime @default(dbgenerated("'0000-00-00'")) @db.Date
+  title      String   @db.VarChar(200)
+  text       String   @db.Text
+  picture    Int      @default(0)
+  showday    Int      @default(1)
+  division   Int      @default(1)
+  status     String   @default("ACTIVE") @db.VarChar(20)
+  id_product Int      @default(0)
+}
+
+model whb_pages {
+  id             Int    @id @default(autoincrement())
+  id_menu        Int    @default(0)
+  prio           Int    @default(0)
+  name           String @db.VarChar(100)
+  title_IDS      Int    @default(0)
+  meta_key_IDS   Int    @default(0)
+  meta_descr_IDS Int    @default(0)
+  body_IDT       Int    @default(0)
+  rule           Int    @default(0)
+}
+
+model whb_pictures {
+  id          Int    @id @default(autoincrement())
+  id_row      Int    @default(0)
+  module      String @db.VarChar(100)
+  filename    String @db.VarChar(200)
+  resize_type Int    @default(1)
+}
+
+model whb_products {
+  id          Int      @id @default(autoincrement())
+  create_day  DateTime @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  name        String   @db.VarChar(200)
+  name_lit    String   @db.VarChar(200)
+  description String   @db.Text
+  id_category Int      @default(0)
+  pictures    Int      @default(0)
+  is_favorite Int      @default(0)
+  is_home     Int      @default(0)
+  id_user     Int      @default(0)
+  prio        Int      @default(1)
+}
+
+model whb_routes {
+  id    Int    @id @default(autoincrement())
+  title String @db.VarChar(200)
+  text  String @db.Text
+}
+
+model whb_users {
+  id          Int       @id @default(autoincrement())
+  create_day  DateTime? @default(dbgenerated("'0000-00-00 00:00:00'")) @db.DateTime(0)
+  fullname    String    @db.VarChar(200)
+  login       String    @db.VarChar(100)
+  password    String    @db.VarChar(100)
+  email       String    @db.VarChar(200)
+  status      String    @default("USER") @db.VarChar(20)
+  code        String    @default("12345678901234") @db.VarChar(14)
+  description String    @db.Text
+}
+
+model whb_variables {
+  id        Int    @id @default(autoincrement())
+  name      String @db.VarChar(50)
+  str_value String @db.Text
+  int_value Int    @default(0)
+}
+
+enum bp_employments_site1 {
+  Y
+  N
+}
+
+enum pmt_survey_feedback_feedback_status {
+  zero @map("0")
+  one  @map("1")
+}
+
+enum bnb_reservations_occupied {
+  one  @map("1")
+  zero @map("0")
+}
+
+enum bp_employments_site2 {
+  Y
+  N
+}
+
+enum bp_langs_site1 {
+  Y
+  N
+}
+
+enum bp_maillangs_site1 {
+  Y
+  N
+}
+
+enum inpaqt_langs_enabled {
+  Y
+  N
+}
+
+enum jbf1_menu_position {
+  T
+  B
+}
+
+enum jbf1_pages_layout {
+  one @map("1")
+  two @map("2")
+}
+
+enum vididoc__menu_position {
+  T
+  B
+  L
+}
+
+enum bnb_schedule_part {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+}
+
+enum bp_employments_site3 {
+  Y
+  N
+}
+
+enum bp_langs_site2 {
+  Y
+  N
+}
+
+enum bp_maillangs_site2 {
+  Y
+  N
+}
+
+enum bridge_cv_languages_read {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+  four  @map("4")
+  five  @map("5")
+}
+
+enum itsnoize2_backgrounds_show {
+  Y
+  N
+}
+
+enum itsnoize2_press_filedata_file_type {
+  jpg
+  flv
+}
+
+enum itsnoize2_products_protected {
+  Y
+  N
+}
+
+enum itsnoize2_users_r1 {
+  Y
+  N
+}
+
+enum kb_company_suppliercompany {
+  zero @map("0")
+  one  @map("1")
+}
+
+enum kb_usertoprojects_user_type {
+  S
+  C
+  D
+}
+
+enum bnb_users_status {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+}
+
+enum bp_employments_type {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+}
+
+enum bp_home_videos_show1 {
+  Y
+  N
+}
+
+enum bp_langs_site3 {
+  Y
+  N
+}
+
+enum bp_maillangs_site3 {
+  Y
+  N
+}
+
+enum bridge_cv_languages_write {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+  four  @map("4")
+  five  @map("5")
+}
+
+enum bridge_users_status {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+}
+
+enum itsnoize2_pics_filedatas_file_t {
+  jpg
+  flv
+}
+
+enum itsnoize2_products_public {
+  Y
+  N
+}
+
+enum itsnoize2_users_r2 {
+  Y
+  N
+}
+
+enum jbf1_classes_showonorderform {
+  Y
+  N
+}
+
+enum jbf1_menu_linkto {
+  NONE
+  PAGE
+  NEWS
+  URL
+  EMAIL
+  FOTO
+}
+
+enum bolwerk_users_status {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+}
+
+enum bp_contactperson_gender {
+  Male
+  Female
+}
+
+enum bp_customervideo_nodateexpiring {
+  Y
+  N
+}
+
+enum bp_home_videos_show2 {
+  Y
+  N
+}
+
+enum bp_locations_show1 {
+  Y
+  N
+}
+
+enum bp_news_archive {
+  Y
+  N
+}
+
+enum bp_press_archive {
+  Y
+  N
+}
+
+enum bridge_cv_education_graduated {
+  yes
+  no
+}
+
+enum bridge_cv_languages_speak {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+  four  @map("4")
+  five  @map("5")
+}
+
+enum bridge_cv_profile_visible {
+  zero @map("0")
+  one  @map("1")
+}
+
+enum bridge_languages_active {
+  Y
+  N
+}
+
+enum inpaqt_users_status {
+  one   @map("1")
+  two   @map("2")
+  three @map("3")
+}
+
+enum itsnoize2_press_filedata_dl_file_type {
+  jpg
+  flv
+}
+
+enum jbf1_classes_photoformat {
+  N
+  W
+}
+
+enum jbf1_news_archive {
+  Y
+  N
+}
+
+enum vididoc__menu_linkto {
+  NONE
+  PAGE
+  NEWS
+  URL
+  EMAIL
+  SPEC
+  ROOT
+}
+
+enum bp_locations_show2 {
+  Y
+  N
+}
+
+enum bp_news_show {
+  Y
+  N
+}
+
+enum bp_press_show {
+  Y
+  N
+}
+
+enum bridge_blog_shown {
+  Y
+  N
+}
+
+enum eenprog_users_visit {
+  yes
+  no
+}
+
+enum bp_csrrecievers_receive {
+  Y
+  N
+}
+
+enum bp_locations_show3 {
+  Y
+  N
+}
+
+enum eenprog_users_page2 {
+  yes
+  no
+}
+
+enum hyline_users_block {
+  Y
+  N
+}
+
+enum jbf1_menu_openin {
+  CA
+  NW
+}
+
+enum eenprog_users_page3 {
+  yes1
+  yes2
+  no
+}
+
+enum vididoc__menu_openin {
+  CA
+  NW
+}
+
+enum bp_customersorders_orderstatus {
+  Shipping
+  Installed
+}
+
+enum eenprog_users_iscalling {
+  true
+  false
+}
+
+enum bp_contactperson_block {
+  Y
+  N
+}
+
+enum bridge_blog_show_english {
+  Y
+  N
+}
+
+enum bridge_pages_mainmenu {
+  Y
+  N
+}
+
+enum eenprog_users_isvisit {
+  true
+  false
+}
+
+enum bnb_reservations_closed {
+  y
+  n
+}
+
+enum bridge_pages_leftmenu {
+  Y
+  N
+}
+
+enum bridge_pages_bottommenu {
+  Y
+  N
+}
+
+enum inpaqt_pages_start {
+  Y
+  N
+}
+
+enum jbf1_schools_autosend {
+  Y
+  N
+}
+
+enum bridge_pages_show {
+  Y
+  N
+}
+
+enum pmt_projects_pmOpened {
+  zero @map("0")
+  one  @map("1")
+  two  @map("2")
+}
+
+enum pmt_users_employment_status {
+  zero @map("0")
+  one  @map("1")
+  two  @map("2")
+}
+
+enum pmt_users_production {
+  yes
+  no
+  na
+}
