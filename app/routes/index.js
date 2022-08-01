@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { login,getAllHour, addHour, updateHour,deleteHour } = require('../controller/user.js');
+const { login, getAllHour, addHour, updateHour, deleteHour, logout } = require('../controller/user.js');
 const auth = require('../middlewares/auth');
 const { body, validationResult } = require('express-validator');
 
@@ -15,5 +15,7 @@ router.post('/hour-registration', auth, addHour) // hour registration
 router.post('/update-hour', auth, updateHour) // updateHour
 
 router.delete('/delete-hour', auth, deleteHour)
+
+router.get('/logout', auth, logout)
 
 module.exports = router;

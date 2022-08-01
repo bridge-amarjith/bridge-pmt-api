@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const bcrypt = require('bcryptjs');
 const jwt = require('../utils/jwt');
+const Jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator');
 
 //login
@@ -35,7 +36,7 @@ const login = async (req, res) => {
 const addHour = async (req, res) => {
     const hour = await prisma.pmt_hour_register.create({
         data: {
-            user_id: req.user.payload.id,
+            user_id: req.me.payload.id,
             pdate: new Date(req.body.pdate),
             hours: parseFloat(req.body.hours),
             proj_id: parseInt(req.body.proj_id),
@@ -60,7 +61,7 @@ const updateHour = async (req, res) => {
                     id: parseInt(req.param('id')),
                 },
                 {
-                    user_id: req.user.payload.id,
+                    user_id: req.me.payload.id,
                 }
             ],
         },
@@ -85,7 +86,7 @@ const deleteHour = async (req, res) => {
     const deleteHour = await prisma.pmt_hour_register.deleteMany({
         where: {
             id: parseInt(req.param('id')),
-            user_id: req.user.payload.id
+            user_id: req.me.payload.id
         },
     })
     res.status(200).json({
@@ -95,11 +96,11 @@ const deleteHour = async (req, res) => {
     })
 }
 
-
+// get all Hours
 const getAllHour = async (req, res) => {
     const allHours = await prisma.pmt_hour_register.findMany({
         where: {
-            user_id: req.user.payload.id
+            user_id: req.me.payload.id
         },
     })
     res.status(200).json({
@@ -109,10 +110,23 @@ const getAllHour = async (req, res) => {
     })
 }
 
+// logout
+const logout = async (req, res) => {
+    const authHeader = req.headers["authorization"];
+    Jwt.sign(authHeader, "", { expiresIn: 1 }, (logout, err) => {
+        if (logout) {
+            res.send({ msg: 'You have been Logged Out' });
+        } else {
+            res.send({ msg: 'Error' });
+        }
+    });
+}
+
 module.exports = {
     login,
     addHour,
     updateHour,
     deleteHour,
     getAllHour,
+    logout
 }
