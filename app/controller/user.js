@@ -17,10 +17,16 @@ const login = async (req, res) => {
         }
     });
     if (!user) {
-        return res.send(JSON.stringify({ "response": "User not found" }))
+        return res.status(404).json({
+            status: true,
+            message: 'User Not found',
+        })
     }
     const checkPassword = bcrypt.compareSync(req.body.password, user.password)
-    if (!checkPassword) return res.send(JSON.stringify({ "response": "password mismatch" }))
+    if (!checkPassword) return res.status(401).json({
+        status: true,
+        message: 'password mismatch',
+    })
     delete user.password
     const accessToken = await jwt.signAccessToken(user)
     res.cookie('token', accessToken, { maxAge: 900000, httpOnly: true });
@@ -122,8 +128,22 @@ const logout = async (req, res) => {
     });
 }
 
+const user = async (req, res) => {
+    const getUser = await prisma.pmt_users.findUnique({
+        where: {
+            id: req.me.payload.id,
+        },
+    })
+    res.status(200).json({
+        status: true,
+        message: 'Fetched Successfully',
+        data: getUser,
+    })
+}
+
 module.exports = {
     login,
+    user,
     addHour,
     updateHour,
     deleteHour,

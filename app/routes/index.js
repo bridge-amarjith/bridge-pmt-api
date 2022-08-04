@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { login, getAllHour, addHour, updateHour, deleteHour, logout } = require('../controller/user.js');
+const { login, user, getAllHour, addHour, updateHour, deleteHour, logout } = require('../controller/user.js');
 const auth = require('../middlewares/auth');
 const { body, validationResult } = require('express-validator');
 
 //web routes
 
 router.post('/login', body('email').isEmail(), body('password').isLength({ min: 8 }), login) // login route
+
+router.get('/user', auth, user)
 
 router.get('/getallregistration', auth, getAllHour)
 
